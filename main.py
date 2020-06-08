@@ -1,6 +1,7 @@
 import csv
 import sys
 from AI import *
+from Game import *
 
 
 tic = TicTacToe()
@@ -82,31 +83,6 @@ def playGame(game, opponent1, opponent2, w, p):
         else:
             w[2] += 1
 
-'''
-while games_played < 1000:
-    playGame(tic, minmax1, minmax2, wins, player)
-    tic.resetBoard()
-    player = 1
-    games_played += 1
-    print(games_played)
-print(wins)
-'''
-'''
-while games_played < 1000:
-    if sys.argv[1] == 'stratego':
-        if sys.argv[2] == 'yes': print(game)
-        else: print(games_played)
-        playGame(game, opp1, opp2, wins, player)
-        if sys.argv[2] == 'yes': print(game)
-
-        game.resetBoard()
-        if sys.argv[1] == 'stratego':
-            opp1 = baseStratego(game, 1, 'yes')
-            opp2 = baseStratego(game, 2, 'yes')
-        player = 1
-        games_played += 1
-print(wins)
-'''
 
 data = []
 for i in range(len(opponents_1)+1):
@@ -127,7 +103,6 @@ for i in range(len(opponents_1)):
             tic.resetBoard()
             player = 1
             games_played += 1
-            #print(games_played)
         print(opponents_1[i], opponents_2[j])
         print(wins)
         data[i+1].append(str(wins[0])+'-'+str(wins[1])+'-'+str(wins[2]))

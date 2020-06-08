@@ -2,7 +2,6 @@ import numpy as np
 from colored import fg, bg, attr
 
 
-
 class Game(object):
     def __init__(self, col, row, playerNum):
         self.row = row
