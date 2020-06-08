@@ -1,17 +1,13 @@
 import numpy as np
-from random import choice
 from colored import fg, bg, attr
 
-class InvalidMove(BaseException):
-    def __repr__(self):
-        return "This move is invalid, chose a different move"
 
 class Game(object):
     def __init__(self, col, row, playerNum):
         self.row = row
         self.col = col
         self.players = playerNum
-        self.board = np.zeros((self.row,self.col))
+        self.board = np.zeros((self.row, self.col))
         self.player1 = []
         self.player2 = []
 
@@ -29,19 +25,19 @@ class Game(object):
         for i in range(self.getRow()):
             for j in range(self.getCol()):
                 if self.board[i][j] == 0:
-                    moveList.append((i,j))
+                    moveList.append((i, j))
         return moveList
 
     def makeMove(self, row, col, player):
         if player == 1:
-            self.player1.append([row,col])
+            self.player1.append([row, col])
         else:
-            self.player2.append([row,col])
+            self.player2.append([row, col])
 
         if (row, col) in self.getMoves():
             self.board[row][col] = player
         else:
-            raise InvalidMove
+            pass
 
     def resetMove(self, row, col):
         self.board[row][col] = 0
@@ -54,9 +50,10 @@ class Game(object):
         self.player1 = []
         self.player2 = []
 
+
 class TicTacToe(Game):
     def __init__(self):
-        super(TicTacToe, self).__init__(3,3,2)
+        super(TicTacToe, self).__init__(3, 3, 2)
         self.name = 'TicTacToe'
 
     def __repr__(self):
@@ -68,7 +65,7 @@ class TicTacToe(Game):
                 elif self.board[i][j] == -1:
                     print_string = print_string + '|{}{}  {}|'.format(fg(4), bg(21), attr(0))
                 else:
-                    print_string = print_string + '|{}{:^2}{}|'.format(bg(0),i*3 + j, attr(0))
+                    print_string = print_string + '|{}{:^2}{}|'.format(bg(0), i * 3 + j, attr(0))
             print_string = print_string + '\n'
         return print_string
 
@@ -97,9 +94,10 @@ class TicTacToe(Game):
         else:
             return None
 
+
 class ConnectFour(Game):
     def __init__(self):
-        super(ConnectFour, self).__init__(7,6,2)
+        super(ConnectFour, self).__init__(7, 6, 2)
         self.name = 'ConnectFour'
 
     def __repr__(self):
@@ -120,16 +118,16 @@ class ConnectFour(Game):
 
     def getMoves(self):
         move_list = []
-        for i in range(self.getCol()):
-            if self.board[0][i] == 0:
-                move_list.append(i)
+        for j in range(self.getCol()):
+            for i in range(self.getRow() - 1, -1, -1):
+                if self.board[i][j] == 0:
+                    move_list.append([i, j])
+                    break
         return move_list
 
-    def makeMove(self, col, player):
-        for i in range(self.getRow()-1,-1,-1):
-            if self.board[i][col] == 0:
-                self.board[i][col] = player
-                return
+    def makeMove(self, row, col, player):
+        if [row, col] in self.getMoves():
+            self.board[row][col] = player
 
     def checkWin(self):
         if self.board[5][0] == self.board[5][1] == self.board[5][2] == self.board[5][3] != 0:
@@ -275,9 +273,10 @@ class ConnectFour(Game):
         else:
             return None
 
+
 class Stratego(Game):
     def __init__(self, pieces):
-        super(Stratego, self).__init__(10,10,2)
+        super(Stratego, self).__init__(10, 10, 2)
         self.name = 'Stratego'
         self.version = pieces
         if self.version == 40:
@@ -313,8 +312,8 @@ class Stratego(Game):
 
         for key in self.pieces:
             for i in range(self.pieces[key]):
-                self.player1.append([key, [-1,-1]])
-                self.player2.append([key, [-1,-1]])
+                self.player1.append([key, [-1, -1]])
+                self.player2.append([key, [-1, -1]])
 
         self.board[4][2] = -1
         self.board[4][3] = -2
@@ -363,8 +362,8 @@ class Stratego(Game):
 
         for key in self.pieces:
             for i in range(self.pieces[key]):
-                self.player1.append([key, [-1,-1]])
-                self.player2.append([key, [-1,-1]])
+                self.player1.append([key, [-1, -1]])
+                self.player2.append([key, [-1, -1]])
 
         self.board[4][2] = -1
         self.board[4][3] = -2
@@ -381,13 +380,13 @@ class Stratego(Game):
     def __repr__(self):
 
         for i in self.player1:
-            if i[1] == [-1,-1]:
+            if i[1] == [-1, -1]:
                 pass
             else:
                 self.board[i[1][0]][i[1][1]] = i[0]
 
         for i in self.player2:
-            if i[1] == [-1,-1]:
+            if i[1] == [-1, -1]:
                 pass
             else:
                 self.board[i[1][0]][i[1][1]] = i[0]
@@ -396,19 +395,19 @@ class Stratego(Game):
         for i in range(self.getRow()):
             for j in range(self.getCol()):
                 if self.board[i][j] == 99:
-                    if [99,[i,j]] in self.player1:
+                    if [99, [i, j]] in self.player1:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(1), 'F', attr(0))
-                    elif [99,[i,j]] in self.player2:
+                    elif [99, [i, j]] in self.player2:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(4), 'F', attr(0))
                 elif self.board[i][j] == 88:
-                    if [88, [i,j]] in self.player1:
+                    if [88, [i, j]] in self.player1:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(1), 'B', attr(0))
-                    elif [88,[i,j]] in self.player2:
+                    elif [88, [i, j]] in self.player2:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(4), 'B', attr(0))
                 elif self.board[i][j] == 1:
-                    if [1,[i,j]] in self.player1:
+                    if [1, [i, j]] in self.player1:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(1), 'S', attr(0))
-                    elif [1,[i,j]] in self.player2:
+                    elif [1, [i, j]] in self.player2:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(4), 'S', attr(0))
                     else:
                         print_string = print_string + '|{:^4}|'.format('10')
@@ -419,9 +418,9 @@ class Stratego(Game):
                 elif self.board[i][j] == 0:
                     print_string = print_string + '|{:^4}|'.format(' ')
                 else:
-                    if [self.board[i][j], [i,j]] in self.player1:
+                    if [self.board[i][j], [i, j]] in self.player1:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(1), int(self.board[i][j]), attr(0))
-                    elif [self.board[i][j], [i,j]] in self.player2:
+                    elif [self.board[i][j], [i, j]] in self.player2:
                         print_string = print_string + '|{}{:^4}{}|'.format(fg(4), int(self.board[i][j]), attr(0))
                     else:
                         print_string = print_string + '|{:^4}|'.format(int(self.board[i][j]))
@@ -432,13 +431,13 @@ class Stratego(Game):
     def listMoves(self, row, col, player):
 
         for i in self.player1:
-            if i[1] == [-1,-1]:
+            if i[1] == [-1, -1]:
                 pass
             else:
                 self.board[i[1][0]][i[1][1]] = i[0]
 
         for i in self.player2:
-            if i[1] == [-1,-1]:
+            if i[1] == [-1, -1]:
                 pass
             else:
                 self.board[i[1][0]][i[1][1]] = i[0]
@@ -454,35 +453,35 @@ class Stratego(Game):
             for i in range(len(self.player1)):
                 if [piece, [row, col]] == self.player1[i]:
                     if piece == 2:
-                        for i in range(row-1, -1, -1):
-                            if self.board[i][col] == 0:
-                                moves.append([i, col])
-                            elif self.board[i][col] > 0:
-                                moves.append([i, col])
+                        for j in range(row - 1, -1, -1):
+                            if self.board[j][col] == 0:
+                                moves.append([j, col])
+                            elif self.board[j][col] > 0:
+                                moves.append([j, col])
                                 break
                             else:
                                 break
-                        for i in range(row+1, 10):
-                            if self.board[i][col] == 0:
-                                moves.append([i, col])
-                            elif self.board[i][col] > 0:
-                                moves.append([i, col])
+                        for j in range(row + 1, 10):
+                            if self.board[j][col] == 0:
+                                moves.append([j, col])
+                            elif self.board[j][col] > 0:
+                                moves.append([j, col])
                                 break
                             else:
                                 break
-                        for i in range(col-1, -1, -1):
-                            if self.board[row][i] == 0:
-                                moves.append([row, i])
-                            elif self.board[row][i] > 0:
-                                moves.append([row, i])
+                        for j in range(col - 1, -1, -1):
+                            if self.board[row][j] == 0:
+                                moves.append([row, j])
+                            elif self.board[row][j] > 0:
+                                moves.append([row, j])
                                 break
                             else:
                                 break
-                        for i in range(col+1, 10):
-                            if self.board[row][i] == 0:
-                                moves.append([row, i])
-                            elif self.board[row][i] > 0:
-                                moves.append([row, i])
+                        for j in range(col + 1, 10):
+                            if self.board[row][j] == 0:
+                                moves.append([row, j])
+                            elif self.board[row][j] > 0:
+                                moves.append([row, j])
                                 break
                             else:
                                 break
@@ -550,8 +549,8 @@ class Stratego(Game):
                     piece = i[0]
             if piece == 88 or piece == 99:
                 return moves
-            for i in range(len(self.player2)):
-                if [piece, [row, col]] == self.player2[i]:
+            for j in range(len(self.player2)):
+                if [piece, [row, col]] == self.player2[j]:
                     if piece == 2:
                         for i in range(row - 1, -1, -1):
                             if self.board[i][col] == 0:
@@ -676,14 +675,6 @@ class Stratego(Game):
 
     def makeMove(self, moveFrom, moveTo, player):
         moves = self.listMoves(moveFrom[0], moveFrom[1], player)
-        if player == 1:
-            for i in self.player1:
-                if moveTo in i:
-                    raise InvalidMove
-        else:
-            for i in self.player2:
-                if moveTo in i:
-                    raise InvalidMove
 
         if moveTo in moves:
             if self.board[moveTo[0]][moveTo[1]] == 0:
@@ -756,8 +747,6 @@ class Stratego(Game):
                                         else:
                                             self.player2.remove(j)
                                             self.board[moveFrom[0]][moveFrom[1]] = 0
-        else:
-            raise InvalidMove
 
     def checkWin(self):
         flag = False
@@ -773,13 +762,15 @@ class Stratego(Game):
         if not flag:
             return 1
 
-        if self.listAll(1) == []:
+        if not self.listAll(1):
             return -1
 
-        if self.listAll(2) == []:
+        if not self.listAll(2):
             return 1
 
         return None
+
+
 
 if __name__ == "__main__":
     tic = TicTacToe()
