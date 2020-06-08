@@ -99,6 +99,9 @@ for i in range(len(opponents_1)):
 for i in range(len(opponents_1)):
     for j in range(len(opponents_2)):
         while games_played < 1000:
+            if i == 6 or j == 6:
+                pass
+                #print(games_played)
             playGame(tic, opponents_1[i], opponents_2[j], wins, player)
             tic.resetBoard()
             player = 1
