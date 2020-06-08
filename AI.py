@@ -4,6 +4,8 @@ from random import choice, randint, shuffle
 import json
 from os import path
 import os
+from numba import jit
+
 
 class AI():
     def __init__(self, game):
@@ -18,11 +20,12 @@ class AI():
     def chooseMove(self):
         return choice(self.game.getMoves())
 
+
 class minimax(AI):
     def __init__(self, game, player):
         self.player = player
         self.name = 'MinMax'
-        self.bestMove = None
+        self.count = 0
         super(minimax, self).__init__(game)
 
     def __repr__(self):
@@ -30,7 +33,7 @@ class minimax(AI):
 
     def minimax_helper(self, maxPlayer):
         if self.game.checkWin() != None:
-            return self.game.checkWin()*10
+            return self.game.checkWin() * 10
 
         if maxPlayer:
             value = -inf
@@ -47,6 +50,40 @@ class minimax(AI):
                 self.game.resetMove(move[0], move[1])
             return value
 
+    def minimax_helper_v2(self, maxPlayer, depth, alpha, beta):
+        if self.game.checkWin() != None:
+            self.count += 1
+            if self.count % 100000 == 0:
+                print(self.count)
+            if self.game.checkWin() == 1:
+                return 10 - depth
+            elif self.game.checkWin() == -1:
+                return -10 + depth
+            else:
+                return 0
+        if maxPlayer:
+            value = -inf
+            for move in self.game.getMoves():
+                self.game.makeMove(move[0], move[1], 1)
+                eval = self.minimax_helper_v2(False, depth + 1, alpha, beta)
+                self.game.resetMove(move[0], move[1])
+                value = max(eval, value)
+                alpha = max(alpha, eval)
+                if beta <= alpha:
+                    break
+            return value
+        else:
+            value = inf
+            for move in self.game.getMoves():
+                self.game.makeMove(move[0], move[1], -1)
+                eval = self.minimax_helper_v2(True, depth + 1, alpha, beta)
+                self.game.resetMove(move[0], move[1])
+                value = min(eval, value)
+                beta = min(beta, eval)
+                if beta <= alpha:
+                    break
+            return value
+
     def chooseMove(self):
 
         best_score = None
@@ -59,20 +96,21 @@ class minimax(AI):
         for move in self.game.getMoves():
             if self.player == 1:
                 self.game.makeMove(move[0], move[1], 1)
-                temp = self.minimax_helper(False)
+                temp = self.minimax_helper_v2(False, 0, -inf, inf)
                 self.game.resetMove(move[0], move[1])
                 if temp > best_score:
                     best_move = move
                     best_score = temp
             else:
                 self.game.makeMove(move[0], move[1], -1)
-                temp = self.minimax_helper(True)
+                temp = self.minimax_helper_v2(True, 0, -inf, inf)
                 self.game.resetMove(move[0], move[1])
                 if temp < best_score:
                     best_move = move
                     best_score = temp
 
         return best_move
+
 
 class MatchBox(AI):
     def __init__(self, game, player):
@@ -111,7 +149,7 @@ class MatchBox(AI):
                 for move in moves_1:
                     for i in range(len(self.states[move[0]])):
                         if self.states[move[0]][i] == move[1]:
-                            self.states[move[0]].extend([i,i,i])
+                            self.states[move[0]].extend([i, i, i])
                 for move in moves_2:
                     continue
                     total = len(self.states[move[0]])
@@ -124,7 +162,7 @@ class MatchBox(AI):
                 for move in moves_2:
                     for i in range(len(self.states[move[0]])):
                         if self.states[move[0]][i] == move[1]:
-                            self.states[move[0]].extend([i,i,i])
+                            self.states[move[0]].extend([i, i, i])
                 for move in moves_1:
                     continue
                     total = len(self.states[move[0]])
@@ -144,10 +182,10 @@ class MatchBox(AI):
     def train(self):
         for i in range(10000):
             self.playGame()
-            #print(self.game.board)
+            # print(self.game.board)
             self.reset()
         os.remove('weights.json')
-        with open('weights.json' ,'w') as outfile:
+        with open('weights.json', 'w') as outfile:
             json.dump(self.states, outfile)
 
     def makeMove(self, a, player):
@@ -173,20 +211,23 @@ class MatchBox(AI):
             if array[i] == '0':
                 if player == 1:
                     array[i] = '1'
-                    outfile.writelines(array[0] + array[1] + array[2] + array[3] + array[4] + array[5] + array[6] + array[7] + array[8] + '\n')
+                    outfile.writelines(
+                        array[0] + array[1] + array[2] + array[3] + array[4] + array[5] + array[6] + array[7] + array[
+                            8] + '\n')
                     self.helper(array, player * -1, outfile)
                     array[i] = '0'
                 elif player == -1:
                     array[i] = '2'
-                    outfile.write(array[0] + array[1] + array[2] + array[3] + array[4] + array[5] + array[6] + array[7] + array[8] + '\n')
+                    outfile.write(
+                        array[0] + array[1] + array[2] + array[3] + array[4] + array[5] + array[6] + array[7] + array[
+                            8] + '\n')
                     self.helper(array, player * -1, outfile)
                     array[i] = '0'
-
 
     def makeDefaults(self):
         with open('weights.txt', 'w') as outfile:
             outfile.write('000000000\n')
-            self.helper(['0','0','0','0','0','0','0','0','0'], 1, outfile)
+            self.helper(['0', '0', '0', '0', '0', '0', '0', '0', '0'], 1, outfile)
 
         states = {}
         with open('weights.txt', 'r') as infile:
@@ -200,6 +241,7 @@ class MatchBox(AI):
         with open('weights.json', 'w') as outfile:
             json.dump(states, outfile)
 
+
 class CenterCorner(AI):
     def __init__(self, game):
         self.name = 'CenterCorner'
@@ -212,18 +254,21 @@ class CenterCorner(AI):
         return "CenterCorner"
 
     def chooseMove(self):
-        if (1,1) in self.game.getMoves():
-            return (1,1)
-        elif (0, 0) in self.game.getMoves() or (2, 0) in self.game.getMoves() or (0, 2) in self.game.getMoves() or (2, 2) in self.game.getMoves():
+        if (1, 1) in self.game.getMoves():
+            return (1, 1)
+        elif (0, 0) in self.game.getMoves() or (2, 0) in self.game.getMoves() or (0, 2) in self.game.getMoves() or (
+        2, 2) in self.game.getMoves():
             pick = choice([(0, 0), (2, 0), (0, 2), (2, 2)])
             while pick not in self.game.getMoves():
                 pick = choice([(0, 0), (2, 0), (0, 2), (2, 2)])
             return pick
-        elif (1, 0) in self.game.getMoves() or (0, 1) in self.game.getMoves() or (1, 2) in self.game.getMoves() or (2, 1) in self.game.getMoves():
+        elif (1, 0) in self.game.getMoves() or (0, 1) in self.game.getMoves() or (1, 2) in self.game.getMoves() or (
+        2, 1) in self.game.getMoves():
             pick = choice([(1, 0), (0, 1), (1, 2), (2, 1)])
             while pick not in self.game.getMoves():
                 pick = choice([(1, 0), (0, 1), (1, 2), (2, 1)])
             return pick
+
 
 class Center(AI):
     def __init__(self, game):
@@ -237,10 +282,11 @@ class Center(AI):
         return self.name
 
     def chooseMove(self):
-        if (1,1) in self.game.getMoves():
-            return (1,1)
+        if (1, 1) in self.game.getMoves():
+            return (1, 1)
         else:
             return choice(self.game.getMoves())
+
 
 class baseStratego(AI):
     def __init__(self, game, player, debug):
@@ -264,10 +310,10 @@ class baseStratego(AI):
 
         if self.player == 1:
             for i in range(len(self.game.player1)):
-                self.game.player1[i][1] = [spots[i]//10, spots[i]%10]
+                self.game.player1[i][1] = [spots[i] // 10, spots[i] % 10]
         else:
             for i in range(len(self.game.player2)):
-                self.game.player2[i][1] = [spots[i]//10 + 6, spots[i]%10]
+                self.game.player2[i][1] = [spots[i] // 10 + 6, spots[i] % 10]
 
     def setup(self):
         if self.player == 1:
@@ -305,6 +351,7 @@ class baseStratego(AI):
         pick = choice(moves)
         return pick
 
+
 class manual(AI):
     def __init__(self, game, player):
         self.name = 'Manual'
@@ -322,17 +369,18 @@ class manual(AI):
         if game.getName() == 'TicTacToe':
             print('Picking a move')
             move = int(input("Make a move: "))
-            game.makeMove(move//3, move % 3, self.player)
+            game.makeMove(move // 3, move % 3, self.player)
         elif game.getName() == 'ConnectFour':
             print('Picking a move')
             move = int(input("Make a move: "))
             game.makeMove(move, self.player)
 
+
 class defenceTic(AI):
     def __init__(self, game, player):
         super(defenceTic, self).__init__(game)
         self.player = player
-        self.name = 'Defence'
+        self.name = 'Defense'
 
     def __repr__(self):
         return self.name
@@ -342,51 +390,82 @@ class defenceTic(AI):
 
     def chooseMove(self):
         if self.player == 1:
-            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
+                return [2, 2]
         else:
-            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][
+                0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == \
+                    self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
+                return [2, 2]
 
         return choice(self.game.getMoves())
+
 
 class offenceTic(AI):
     def __init__(self, game, player):
         super(offenceTic, self).__init__(game)
         self.player = player
-        self.name = 'Offence'
+        self.name = 'Offense'
 
     def __repr__(self):
         return self.name
@@ -396,51 +475,82 @@ class offenceTic(AI):
 
     def chooseMove(self):
         if self.player == -1:
-            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
+                return [2, 2]
         else:
-            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][
+                0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == \
+                    self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
+                return [2, 2]
 
         return choice(self.game.getMoves())
+
 
 class offdefTic(AI):
     def __init__(self, game, player):
         super(offdefTic, self).__init__(game)
         self.player = player
-        self.name = 'OffenceDefence'
+        self.name = 'OffenseDefense'
 
     def __repr__(self):
         return self.name
@@ -450,105 +560,165 @@ class offdefTic(AI):
 
     def chooseMove(self):
         if self.player == -1:
-            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
+                return [2, 2]
         else:
-            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][
+                0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == \
+                    self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
+                return [2, 2]
 
         if self.player == 1:
-            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][0] == self.game.board[2][0] == -1 and self.game.board[0][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[2][2] == -1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == -1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == -1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == -1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == -1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == -1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == -1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == -1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == -1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == -1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == -1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == -1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == -1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == -1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == -1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == -1 and self.game.board[2][2] == 0:
+                return [2, 2]
         else:
-            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
-                return [0,0]
-            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
-                return [0,1]
-            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
-                return [0,2]
-            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
-                return [1,0]
-            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
-                return [1,1]
-            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
-                return [1,2]
-            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
-                return [2,0]
-            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
-                return [2,1]
-            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
-                return [2,2]
+            if self.game.board[0][1] == self.game.board[0][2] == 1 and self.game.board[0][0] == 0 or self.game.board[1][
+                0] == self.game.board[2][0] == 1 and self.game.board[0][0] == 0 or self.game.board[1][1] == \
+                    self.game.board[2][2] == 1 and self.game.board[0][0] == 0:
+                return [0, 0]
+            elif self.game.board[0][0] == self.game.board[0][2] == 1 and self.game.board[0][1] == 0 or \
+                    self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[0][1] == 0:
+                return [0, 1]
+            elif self.game.board[0][0] == self.game.board[0][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[1][1] == 1 and self.game.board[0][2] == 0 or \
+                    self.game.board[1][2] == self.game.board[2][2] == 1 and self.game.board[0][2] == 0:
+                return [0, 2]
+            elif self.game.board[1][1] == self.game.board[1][2] == 1 and self.game.board[1][0] == 0 or \
+                    self.game.board[0][0] == self.game.board[2][0] == 1 and self.game.board[1][0] == 0:
+                return [1, 0]
+            elif self.game.board[0][0] == self.game.board[2][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][2] == self.game.board[2][0] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][2] == 1 and self.game.board[1][1] == 0 or \
+                    self.game.board[0][1] == self.game.board[2][1] == 1 and self.game.board[1][1] == 0:
+                return [1, 1]
+            elif self.game.board[0][2] == self.game.board[2][2] == 1 and self.game.board[1][2] == 0 or \
+                    self.game.board[1][0] == self.game.board[1][1] == 1 and self.game.board[1][2] == 0:
+                return [1, 2]
+            elif self.game.board[0][0] == self.game.board[1][0] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[2][1] == self.game.board[2][2] == 1 and self.game.board[2][0] == 0 or \
+                    self.game.board[1][1] == self.game.board[0][2] == 1 and self.game.board[2][0] == 0:
+                return [2, 0]
+            elif self.game.board[0][1] == self.game.board[1][1] == 1 and self.game.board[2][1] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][2] == 1 and self.game.board[2][1] == 0:
+                return [2, 1]
+            elif self.game.board[0][0] == self.game.board[1][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
+                    self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
+                return [2, 2]
 
         return choice(self.game.getMoves())
 
 
-
 if __name__ == "__main__":
     try:
-        g = TicTacToe()
-        opp1 = MinMax(g, 1)
-        opp2 = MinMax(g, -1)
+        g = ConnectFour()
+        opp1 = minimax(g, 1)
+        opp2 = minimax(g, -1)
         turn = 1
         while g.checkWin() == None:
-            opp1 = MinMax(g, 1)
-            opp2 = MinMax(g, -1)
             print(g)
             if turn % 2 == 1:
-                opp1.chooseMove(turn)
+                move = opp1.chooseMove()
+                opp1.game.makeMove(move[0], move[1], 1)
                 turn += 1
             else:
-                move = int(input('Pick a move: '))
-                g.makeMove(move // 3, move % 3, -1)
-                #opp2.chooseMove(turn)
+                input("Press enter to continue: ")
+                move = opp2.chooseMove()
+                opp2.game.makeMove(move[0], move[1], -1)
                 turn += 1
+            # print(opp1.count)
+            opp1.count = 0
         print(g)
     except KeyboardInterrupt:
         pass
