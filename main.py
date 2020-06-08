@@ -3,7 +3,6 @@ import sys
 from AI import *
 from Game import *
 
-
 tic = TicTacToe()
 con = ConnectFour()
 strat = Stratego(40)

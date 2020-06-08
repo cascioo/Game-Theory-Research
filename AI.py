@@ -2,7 +2,6 @@ from math import inf
 from random import shuffle, choice
 from Game import *
 
-
 class AI(object):
     def __init__(self, game):
         self.game = game
