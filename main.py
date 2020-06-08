@@ -2,6 +2,7 @@ import csv
 import sys
 from AI import *
 
+
 tic = TicTacToe()
 con = ConnectFour()
 strat = Stratego(40)
