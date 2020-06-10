@@ -84,7 +84,7 @@ def playGame(game, opponent1, opponent2, w, p):
 
 
 data = []
-for i in range(len(opponents_1)+1):
+for i in range(len(opponents_1) + 1):
     data.append([])
 
 data[0].append('')
@@ -92,27 +92,26 @@ for i in opponents_2:
     data[0].append(i.getName())
 
 for i in range(len(opponents_1)):
-    data[i+1].append(opponents_1[i].getName())
-
+    data[i + 1].append(opponents_1[i].getName())
 
 for i in range(len(opponents_1)):
     for j in range(len(opponents_2)):
         while games_played < 1000:
             if i == 6 or j == 6:
                 pass
-                #print(games_played)
+                # print(games_played)
             playGame(tic, opponents_1[i], opponents_2[j], wins, player)
             tic.resetBoard()
             player = 1
             games_played += 1
         print(opponents_1[i], opponents_2[j])
         print(wins)
-        data[i+1].append(str(wins[0])+'-'+str(wins[1])+'-'+str(wins[2]))
+        data[i + 1].append(str(wins[0]) + '-' + str(wins[1]) + '-' + str(wins[2]))
         games_played = 0
         player = 1
-        wins = [0,0,0]
+        wins = [0, 0, 0]
 
 with open('data.csv', 'w', newline='') as csvfile:
-    writer = csv.writer(csvfile, delimiter=',', quotechar=' ', quoting=csv.QUOTE_MINIMAL, escapechar = ' ', skipinitialspace = True)
+    writer = csv.writer(csvfile, delimiter=',', quotechar=' ', quoting=csv.QUOTE_MINIMAL, escapechar=' ',
+                        skipinitialspace=True)
     writer.writerows(data)
-

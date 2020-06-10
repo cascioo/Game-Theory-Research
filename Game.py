@@ -266,7 +266,7 @@ class ConnectFour(Game):
         elif self.board[3][5] == self.board[2][4] == self.board[1][3] == self.board[0][2] != 0:
             return self.board[3][5]
         elif self.board[3][6] == self.board[2][5] == self.board[1][4] == self.board[0][3] != 0:
-            return self.board[0][6]
+            return self.board[3][6]
         elif 0 not in self.board:
             return 0
         else:
