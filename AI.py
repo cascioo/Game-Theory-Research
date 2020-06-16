@@ -18,11 +18,12 @@ class AI(object):
 
 
 class MiniMax(AI):
-    def __init__(self, game, player):
+    def __init__(self, game, look, player):
         self.player = player
         self.name = 'MinMax'
         self.bestMove = []
         self.count = 0
+        self.look = look
         super(MiniMax, self).__init__(game)
 
     def __repr__(self):
@@ -48,7 +49,7 @@ class MiniMax(AI):
             return value
 
     def minimax_helper_v2(self, maxPlayer, depth, alpha, beta):
-        if self.game.checkWin() is not None or depth == 6:
+        if self.game.checkWin() is not None or depth == self.look:
             self.count += 1
             if self.count % 100000 == 0:
                 print(self.count)
@@ -3044,8 +3045,8 @@ class offdefTic(AI):
 if __name__ == "__main__":
     try:
         g = ConnectFour()
-        opp1 = MiniMax(g, 1)
-        opp2 = MiniMax(g, -1)
+        opp1 = MiniMax(g, 7, 1)
+        opp2 = MiniMax(g, 7, -1)
         turn = 1
         while g.checkWin() is None:
             print(g)
