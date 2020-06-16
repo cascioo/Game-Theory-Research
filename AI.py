@@ -254,385 +254,2300 @@ class MiniMax(AI):
                             score -= 1
             return score
         elif self.game.getName() == "ConnectFour":
-            if player == 1:
-                if self.game.board[5][0] == 0:
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                            if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                                score += 1
-                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
-                        if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
-                            if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
-                                score += 1
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                if self.game.board[5][1] == 0:
-                    if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
-                        if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                            if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                                score += 1
+            if self.game.board[5][0] == 0:
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
                     if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
                         if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                            if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                                score += 1
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
-                            if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                                score += 1
-                if self.game.board[5][2] == 0:
-                    if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
-                        if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                            if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                                score += 1
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                            if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                                score += 1
-                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                            if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                                score += 1
-                if self.game.board[5][3] == 0:
-                    if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
-                        if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                            if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                                score += 1
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                            if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                                score += 1
-                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                            if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                                score += 1
-                    if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                            if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
-                            if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
-                            if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
-                                score += 1
-                if self.game.board[5][4] == 0:
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                            if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                                score += 1
-                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                            if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                                score += 1
-                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                            if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
-                                score += 1
-                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                                score += 1
-                if self.game.board[5][5] == 0:
-                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                            if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                                score += 1
-                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                            if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
-                                score += 1
-                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
-                            if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                                score += 1
-                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                                score += 1
-                if self.game.board[5][6] == 0:
-                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                            if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                                score += 1
-                    if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
-                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
-                            if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
-                                score += 1
-                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                if self.game.board[4][0] == 0:
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                            if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                                score += 1
-                    if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
-                        if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
-                            if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
                     if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
                         if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
-                            if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
-                                score += 1
-                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
-                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                            if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
-                                score += 1
-                if self.game.board[4][1] == 0:
-                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
-                        if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                            if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                            if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                                score += 1
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
-                            if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+            if self.game.board[5][1] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
                     if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
                         if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                            if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
-                                score += 1
-                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                            if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
-                                score += 1
-                    if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                if self.game.board[4][2] == 0:
-                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
-                        if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                            if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                                score += 1
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                            if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                            if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                                score += 1
-                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                                score += 1
-                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                            if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
-                                score += 1
-                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
                     if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
                         if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                            if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
-                                score += 1
-                    if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
-                        if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
-                            if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                                score += 1
-                if self.game.board[4][3] == 0:
-                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
-                        if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                            if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                                score += 1
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                            if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                            if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                                score += 1
-                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                            if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
-                                score += 1
+                            score += 1
+            if self.game.board[5][2] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
                     if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                            if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
-                                score += 1
-                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                                score += 1
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
                     if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
                         if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                            if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
-                                score += 1
+                            score += 1
+            if self.game.board[5][3] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                        if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
                     if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                            if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                                score += 1
-                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
-                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
-                            if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
-                                score += 1
-                if self.game.board[4][4] == 0:
-                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
-                        if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                            if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                                score += 1
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                            if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                            if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
-                                score += 1
-                    if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                                score += 1
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                            score += 1
+            if self.game.board[5][4] == 0:
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
                     if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
                         if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                            if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
-                                score += 1
-                    if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
-                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
-                            if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+            if self.game.board[5][5] == 0:
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
                     if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
-                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
-                            if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
-                                score += 1
-                if self.game.board[4][5] == 0:
-                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
-                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                            if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                                score += 1
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                            if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
-                                score += 1
-                    if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
-                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
-                            if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                                score += 1
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
                     if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
                         if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
-                            if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
-                                score += 1
-                    if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
-                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                            if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                                score += 1
-                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
-                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
-                            if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
-                                score += 1
-                if self.game.board[4][6] == 0:
-                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
-                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
-                            if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
-                                score += 1
-                    if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
-                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
-                            if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+            if self.game.board[5][6] == 0:
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                            score += 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
                     if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
                         if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
-                            if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
-                                score += 1
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+            if self.game.board[4][0] == 0:
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+            if self.game.board[4][1] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+            if self.game.board[4][2] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+            if self.game.board[4][3] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+            if self.game.board[4][4] == 0:
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+            if self.game.board[4][5] == 0:
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                            score += 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+            if self.game.board[4][6] == 0:
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                            score += 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+            if self.game.board[3][0] == 0:
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                            score += 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+            if self.game.board[3][1] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+            if self.game.board[3][2] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                            score += 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                            score += 1
+            if self.game.board[3][3] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                            score += 1
+            if self.game.board[3][4] == 0:
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                            score += 1
+            if self.game.board[3][5] == 0:
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                            score += 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                            score += 1
+            if self.game.board[3][6] == 0:
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                    if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                    if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+            if self.game.board[2][0] == 0:
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                        if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                            score += 1
+            if self.game.board[2][1] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+            if self.game.board[2][2] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                            score += 1
+            if self.game.board[2][3] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == 1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                            score += 1
+            if self.game.board[2][4] == 0:
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == 1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+            if self.game.board[2][5] == 0:
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == 1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == 1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+            if self.game.board[2][6] == 0:
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == 1:
+                    if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                            score += 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == 1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                            score += 1
+            if self.game.board[1][0] == 0:
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+            if self.game.board[1][1] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                            score += 1
+            if self.game.board[1][2] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                            score += 1
+            if self.game.board[1][3] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == 1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
                     if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
                         if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
-                            if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
-                                score += 1
-                if self.game.board[3][0] == 0:
-                    pass
-                if self.game.board[3][1] == 0:
-                    pass
-                if self.game.board[3][2] == 0:
-                    pass
-                if self.game.board[3][3] == 0:
-                    pass
-                if self.game.board[3][4] == 0:
-                    pass
-                if self.game.board[3][5] == 0:
-                    pass
-                if self.game.board[3][6] == 0:
-                    pass
-                if self.game.board[2][0] == 0:
-                    pass
-                if self.game.board[2][1] == 0:
-                    pass
-                if self.game.board[2][2] == 0:
-                    pass
-                if self.game.board[2][3] == 0:
-                    pass
-                if self.game.board[2][4] == 0:
-                    pass
-                if self.game.board[2][5] == 0:
-                    pass
-                if self.game.board[2][6] == 0:
-                    pass
-                if self.game.board[1][0] == 0:
-                    pass
-                if self.game.board[1][1] == 0:
-                    pass
-                if self.game.board[1][2] == 0:
-                    pass
-                if self.game.board[1][3] == 0:
-                    pass
-                if self.game.board[1][4] == 0:
-                    pass
-                if self.game.board[1][5] == 0:
-                    pass
-                if self.game.board[1][6] == 0:
-                    pass
-                if self.game.board[0][0] == 0:
-                    pass
-                if self.game.board[0][1] == 0:
-                    pass
-                if self.game.board[0][2] == 0:
-                    pass
-                if self.game.board[0][3] == 0:
-                    pass
-                if self.game.board[0][4] == 0:
-                    pass
-                if self.game.board[0][5] == 0:
-                    pass
-                if self.game.board[0][6] == 0:
-                    pass
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+            if self.game.board[1][4] == 0:
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == 1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+            if self.game.board[1][5] == 0:
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == 1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == 1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+            if self.game.board[1][6] == 0:
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == 1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == 1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                            score += 1
+            if self.game.board[0][0] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == 1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == 1:
+                            score += 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+            if self.game.board[0][1] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+            if self.game.board[0][2] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                    if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+            if self.game.board[0][3] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == 1:
+                    if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                            score += 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                    if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == 1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == 1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+            if self.game.board[0][4] == 0:
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == 1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                            score += 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                    if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == 1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == 1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == 1:
+                            score += 1
+            if self.game.board[0][5] == 0:
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == 1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                            score += 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == 1:
+                            score += 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == 1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == 1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == 1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == 1:
+                            score += 1
+            if self.game.board[0][6] == 0:
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == 1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == 1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == 1:
+                            score += 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == 1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == 1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == 1:
+                            score += 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == 1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == 1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == 1:
+                            score += 1
+            if self.game.board[5][0] == 0:
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+            if self.game.board[5][1] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+            if self.game.board[5][2] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+            if self.game.board[5][3] == 0:
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                        if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                            score -= 1
+            if self.game.board[5][4] == 0:
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+            if self.game.board[5][5] == 0:
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+            if self.game.board[5][6] == 0:
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                            score -= 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+            if self.game.board[4][0] == 0:
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+            if self.game.board[4][1] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+            if self.game.board[4][2] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+            if self.game.board[4][3] == 0:
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+            if self.game.board[4][4] == 0:
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+            if self.game.board[4][5] == 0:
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                            score -= 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+            if self.game.board[4][6] == 0:
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                            score -= 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+            if self.game.board[3][0] == 0:
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                            score -= 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+            if self.game.board[3][1] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+            if self.game.board[3][2] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                            score -= 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                            score -= 1
+            if self.game.board[3][3] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                            score -= 1
+            if self.game.board[3][4] == 0:
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                            score -= 1
+            if self.game.board[3][5] == 0:
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                            score -= 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                            score -= 1
+            if self.game.board[3][6] == 0:
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                    if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                    if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+            if self.game.board[2][0] == 0:
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                        if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                            score -= 1
+            if self.game.board[2][1] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+            if self.game.board[2][2] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                            score -= 1
+            if self.game.board[2][3] == 0:
+                if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[5][0] == 0 or self.game.board[5][0] == -1:
+                    if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                        if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                            score -= 1
+            if self.game.board[2][4] == 0:
+                if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[5][4] == 0 or self.game.board[5][4] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[5][1] == 0 or self.game.board[5][1] == -1:
+                    if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                        if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+            if self.game.board[2][5] == 0:
+                if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[5][5] == 0 or self.game.board[5][5] == -1:
+                    if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[5][2] == 0 or self.game.board[5][2] == -1:
+                    if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                        if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+            if self.game.board[2][6] == 0:
+                if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[5][6] == 0 or self.game.board[5][6] == -1:
+                    if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                        if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                            score -= 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[5][3] == 0 or self.game.board[5][3] == -1:
+                    if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                        if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                            score -= 1
+            if self.game.board[1][0] == 0:
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                        if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+            if self.game.board[1][1] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                            score -= 1
+            if self.game.board[1][2] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                            score -= 1
+            if self.game.board[1][3] == 0:
+                if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                    if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[4][0] == 0 or self.game.board[4][0] == -1:
+                    if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                        if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+            if self.game.board[1][4] == 0:
+                if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                    if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                    if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[4][4] == 0 or self.game.board[4][4] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[4][1] == 0 or self.game.board[4][1] == -1:
+                    if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                        if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+            if self.game.board[1][5] == 0:
+                if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                    if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[4][5] == 0 or self.game.board[4][5] == -1:
+                    if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[4][2] == 0 or self.game.board[4][2] == -1:
+                    if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                        if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+            if self.game.board[1][6] == 0:
+                if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                    if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+
+                if self.game.board[4][6] == 0 or self.game.board[4][6] == -1:
+                    if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                        if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[4][3] == 0 or self.game.board[4][3] == -1:
+                    if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                        if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                            score -= 1
+            if self.game.board[0][0] == 0:
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[2][0] == 0 or self.game.board[2][0] == -1:
+                        if self.game.board[1][0] == 0 or self.game.board[1][0] == -1:
+                            score -= 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+            if self.game.board[0][1] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[1][1] == 0 or self.game.board[1][1] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+            if self.game.board[0][2] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                    if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+            if self.game.board[0][3] == 0:
+                if self.game.board[0][0] == 0 or self.game.board[0][0] == -1:
+                    if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                        if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                            score -= 1
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                    if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+                if self.game.board[3][0] == 0 or self.game.board[3][0] == -1:
+                    if self.game.board[2][1] == 0 or self.game.board[2][1] == -1:
+                        if self.game.board[1][2] == 0 or self.game.board[1][2] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+            if self.game.board[0][4] == 0:
+                if self.game.board[0][1] == 0 or self.game.board[0][1] == -1:
+                    if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                        if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                            score -= 1
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                    if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[3][4] == 0 or self.game.board[3][4] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+                if self.game.board[3][1] == 0 or self.game.board[3][1] == -1:
+                    if self.game.board[2][2] == 0 or self.game.board[2][2] == -1:
+                        if self.game.board[1][3] == 0 or self.game.board[1][3] == -1:
+                            score -= 1
+            if self.game.board[0][5] == 0:
+                if self.game.board[0][2] == 0 or self.game.board[0][2] == -1:
+                    if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                        if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                            score -= 1
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                        if self.game.board[0][6] == 0 or self.game.board[0][6] == -1:
+                            score -= 1
+                if self.game.board[3][5] == 0 or self.game.board[3][5] == -1:
+                    if self.game.board[2][5] == 0 or self.game.board[2][5] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
+                if self.game.board[3][2] == 0 or self.game.board[3][2] == -1:
+                    if self.game.board[2][3] == 0 or self.game.board[2][3] == -1:
+                        if self.game.board[1][4] == 0 or self.game.board[1][4] == -1:
+                            score -= 1
+            if self.game.board[0][6] == 0:
+                if self.game.board[0][3] == 0 or self.game.board[0][3] == -1:
+                    if self.game.board[0][4] == 0 or self.game.board[0][4] == -1:
+                        if self.game.board[0][5] == 0 or self.game.board[0][5] == -1:
+                            score -= 1
+                if self.game.board[3][6] == 0 or self.game.board[3][6] == -1:
+                    if self.game.board[2][6] == 0 or self.game.board[2][6] == -1:
+                        if self.game.board[1][6] == 0 or self.game.board[1][6] == -1:
+                            score -= 1
+                if self.game.board[3][3] == 0 or self.game.board[3][3] == -1:
+                    if self.game.board[2][4] == 0 or self.game.board[2][4] == -1:
+                        if self.game.board[1][5] == 0 or self.game.board[1][5] == -1:
+                            score -= 1
             return score
         elif self.game.getName() == "Stratego":
             pass
