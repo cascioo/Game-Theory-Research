@@ -2882,7 +2882,6 @@ class offenceTic(AI):
                     self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
                     self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
                 return [2, 2]
-
         return choice(self.game.getMoves())
 
 
