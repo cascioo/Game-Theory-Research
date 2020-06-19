@@ -40,6 +40,10 @@ class Game(object):
 
     def resetMove(self, row, col):
         self.board[row][col] = 0
+        if [row, col] in self.player1:
+            self.player1.remove([row, col])
+        else:
+            self.player2.remove([row, col])
 
     def checkWin(self):
         pass
@@ -98,6 +102,8 @@ class ConnectFour(Game):
     def __init__(self):
         super(ConnectFour, self).__init__(7, 6, 2)
         self.name = 'ConnectFour'
+        self.player1 = []
+        self.player2 = []
 
     def __repr__(self):
         print_string = ''
@@ -127,6 +133,10 @@ class ConnectFour(Game):
     def makeMove(self, row, col, player):
         if [row, col] in self.getMoves():
             self.board[row][col] = player
+            if player == 1:
+                self.player1.append([row, col])
+            else:
+                self.player2.append([row, col])
 
     def checkWin(self):
         if self.board[5][0] == self.board[5][1] == self.board[5][2] == self.board[5][3] != 0:

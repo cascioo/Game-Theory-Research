@@ -27,7 +27,10 @@ class MiniMax(AI):
         super(MiniMax, self).__init__(game)
 
     def __repr__(self):
-        return "MinMax"
+        return "MinMax" + str(self.look)
+
+    def getName(self):
+        return "MinMax" + str(self.look)
 
     def minimax_helper(self, maxPlayer):
         if self.game.checkWin() is not None:
@@ -2719,11 +2722,11 @@ class manual(AI):
             self.game.makeMove(player_choice, self.player)
 
 
-class defenceTic(AI):
+class defenseTic(AI):
     def __init__(self, game, player):
-        super(defenceTic, self).__init__(game)
+        super(defenseTic, self).__init__(game)
         self.player = player
-        self.name = 'Defence'
+        self.name = 'Defense'
 
     def __repr__(self):
         return self.name
@@ -2804,11 +2807,11 @@ class defenceTic(AI):
         return choice(self.game.getMoves())
 
 
-class offenceTic(AI):
+class offenseTic(AI):
     def __init__(self, game, player):
-        super(offenceTic, self).__init__(game)
+        super(offenseTic, self).__init__(game)
         self.player = player
-        self.name = 'Offence'
+        self.name = 'Offense'
 
     def __repr__(self):
         return self.name
@@ -2892,7 +2895,7 @@ class offdefTic(AI):
     def __init__(self, game, player):
         super(offdefTic, self).__init__(game)
         self.player = player
-        self.name = 'OffenceDefence'
+        self.name = 'OffenseDefense'
 
     def __repr__(self):
         return self.name
@@ -3042,16 +3045,71 @@ class offdefTic(AI):
         return choice(self.game.getMoves())
 
 
+class copyBlock(AI):
+    def __init__(self, game, player):
+        super(copyBlock, self).__init__(game)
+        self.player = player
+        self.name = 'CopyBlock'
+
+    def __repr__(self):
+        return self.name
+
+    def getName(self):
+        return self.name
+
+    def chooseMove(self):
+        if self.player == 1:
+            if self.nextMoveWin() is not None:
+                return self.nextMoveWin()
+            else:
+                if len(self.game.player2) == 0:
+                    return choice(self.game.getMoves())
+                else:
+                    col = self.game.player2[-1][1]
+                    for move in self.game.getMoves():
+                        if col == move[1]:
+                            return move
+                    return choice(self.game.getMoves())
+        else:
+            if self.nextMoveWin() is not None:
+                return self.nextMoveWin()
+            else:
+                if len(self.game.player1) == 0:
+                    return choice(self.game.getMoves())
+                else:
+                    col = self.game.player1[-1][1]
+                    for move in self.game.getMoves():
+                        if col == move[1]:
+                            return move
+                    return choice(self.game.getMoves())
+
+    def nextMoveWin(self):
+        if self.player == 1:
+            for move in self.game.getMoves():
+                self.game.makeMove(move[0], move[1], -1)
+                if self.game.checkWin() == -1:
+                    self.game.resetMove(move[0], move[1])
+                    return move
+                self.game.resetMove(move[0], move[1])
+            return None
+        else:
+            for move in self.game.getMoves():
+                self.game.makeMove(move[0], move[1], 1)
+                if self.game.checkWin() == 1:
+                    self.game.resetMove(move[0], move[1])
+                    return move
+                self.game.resetMove(move[0], move[1])
+            return None
+
 if __name__ == "__main__":
     try:
         g = ConnectFour()
-        opp1 = MiniMax(g, 7, 1)
-        opp2 = MiniMax(g, 7, -1)
+        opp1 = copyBlock(g, 1)
+        opp2 = copyBlock(g, -1)
         turn = 1
         while g.checkWin() is None:
             print(g)
             if turn % 2 == 1:
-                # print(opp1.evaluateBoard(1))
                 move = opp1.chooseMove()
                 opp1.game.makeMove(move[0], move[1], 1)
                 turn += 1
@@ -3068,7 +3126,7 @@ if __name__ == "__main__":
                         new_move = moves
                 opp2.game.makeMove(new_move[0], new_move[1], -1)
                 turn += 1
-                '''
+               '''
         print(g)
     except KeyboardInterrupt:
         pass
