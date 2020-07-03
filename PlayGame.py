@@ -6,7 +6,8 @@ tic = TicTacToe()
 con = ConnectFour()
 
 # Various opponents for TicTacToe
-randomTic = AI(tic)
+randomTic1 = AI(tic, 1)
+randomTic2 = AI(tic, -1)
 defense1 = defenseTic(tic, 1)
 defense2 = defenseTic(tic, -1)
 offense1 = offenseTic(tic, 1)
@@ -15,11 +16,14 @@ minmax1 = MiniMax(tic, 3, 1)
 minmax2 = MiniMax(tic, 3, -1)
 dual1 = offdefTic(tic, 1)
 dual2 = offdefTic(tic, -1)
-centercorner = CenterCorner(tic)
-center = Center(tic)
+centercorner1 = CenterCorner(tic, 1)
+centercorner2 = CenterCorner(tic, -1)
+center1 = Center(tic, 1)
+center2 = Center(tic, -1)
 
 # Various opponents for Connect Four
-randomCon = AI(con)
+randomCon_1 = AI(con, 1)
+randomCon_2 = AI(con, -1)
 copyCon_1 = copyBlock(con, 1)
 copyCon_2 = copyBlock(con, -1)
 MinMax2_1 = MiniMax(con, 2, 1)
@@ -37,21 +41,25 @@ opp1 = None
 opp2 = None
 # Change turn to set who goes first, 0 is computer, 1 is you
 turn = 0
-while g.checkWin() is None:
-    print(g)
-    if turn % 2 == 1:
-        move = opp1.chooseMove()
-        opp1.game.makeMove(move[0], move[1], 1)
-        turn += 1
-    else:
-        if opp2:
-            move = opp2.chooseMove()
-            opp2.game.makeMove(move[0], move[1], -1)
+try:
+
+    while g.checkWin() is None:
+        print(g)
+        if turn % 2 == 1:
+            move = opp1.chooseMove()
+            opp1.game.makeMove(move[0], move[1], 1)
             turn += 1
         else:
-            move_row = int(input("Pick a row: "))
-            move_col = int(input("Pick a column: "))
-            g.makeMove(move_row, move_col, -1)
-            turn += 1
+            if opp2:
+                move = opp2.chooseMove()
+                opp2.game.makeMove(move[0], move[1], -1)
+                turn += 1
+            else:
+                move_row = int(input("Pick a row: "))
+                move_col = int(input("Pick a column: "))
+                g.makeMove(move_row, move_col, -1)
+                turn += 1
 
-print(g)
+    print(g)
+except KeyboardInterrupt:
+    pass

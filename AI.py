@@ -25,7 +25,7 @@ class MiniMax(AI):
         self.bestMove = []
         self.count = 0
         self.look = look
-        super(MiniMax, self).__init__(game)
+        super(MiniMax, self).__init__(game, player)
 
     def __repr__(self):
         return "MinMax" + str(self.look)
@@ -2590,9 +2590,9 @@ class MiniMax(AI):
 
 
 class CenterCorner(AI):
-    def __init__(self, game):
+    def __init__(self, game, player):
         self.name = 'CenterCorner'
-        super(CenterCorner, self).__init__(game)
+        super(CenterCorner, self).__init__(game, player)
 
     def getName(self):
         return self.name
@@ -2618,9 +2618,9 @@ class CenterCorner(AI):
 
 
 class Center(AI):
-    def __init__(self, game):
+    def __init__(self, game, player):
         self.name = "Center"
-        super(Center, self).__init__(game)
+        super(Center, self).__init__(game, player)
 
     def __repr__(self):
         return "Center"
@@ -2637,7 +2637,7 @@ class Center(AI):
 
 class baseStratego(AI):
     def __init__(self, game, player, debug):
-        super(baseStratego, self).__init__(game)
+        super(baseStratego, self).__init__(game, player)
         self.name = 'baseStratego'
         self.player = player
         if debug == "yes":
@@ -2702,7 +2702,7 @@ class baseStratego(AI):
 class manual(AI):
     def __init__(self, game, player):
         self.name = 'Manual'
-        super(manual, self).__init__(game)
+        super(manual, self).__init__(game, player)
         self.player = player
 
     def __repr__(self):
@@ -2725,7 +2725,7 @@ class manual(AI):
 
 class defenseTic(AI):
     def __init__(self, game, player):
-        super(defenseTic, self).__init__(game)
+        super(defenseTic, self).__init__(game, player)
         self.player = player
         self.name = 'Defense'
 
@@ -2810,7 +2810,7 @@ class defenseTic(AI):
 
 class offenseTic(AI):
     def __init__(self, game, player):
-        super(offenseTic, self).__init__(game)
+        super(offenseTic, self).__init__(game, player)
         self.player = player
         self.name = 'Offense'
 
@@ -2894,7 +2894,7 @@ class offenseTic(AI):
 
 class offdefTic(AI):
     def __init__(self, game, player):
-        super(offdefTic, self).__init__(game)
+        super(offdefTic, self).__init__(game, player)
         self.player = player
         self.name = 'OffenseDefense'
 
@@ -3048,7 +3048,7 @@ class offdefTic(AI):
 
 class copyBlock(AI):
     def __init__(self, game, player):
-        super(copyBlock, self).__init__(game)
+        super(copyBlock, self).__init__(game, player)
         self.player = player
         self.name = 'CopyBlock'
 

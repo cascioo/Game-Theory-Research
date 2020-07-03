@@ -20,7 +20,7 @@ class Game(object):
     def getCol(self):
         return self.col
 
-    def getMoves(self):
+    def getMoves(self, player):
         moveList = []
         for i in range(self.getRow()):
             for j in range(self.getCol()):
@@ -34,7 +34,7 @@ class Game(object):
         else:
             self.player2.append([row, col])
 
-        if (row, col) in self.getMoves():
+        if (row, col) in self.getMoves(1):
             self.board[row][col] = player
         else:
             pass
@@ -93,7 +93,7 @@ class TicTacToe(Game):
             return self.board[0][0]
         elif self.board[0][2] == self.board[1][1] == self.board[2][0] != 0:
             return self.board[0][2]
-        elif not self.getMoves():
+        elif not self.getMoves(1):
             return 0
         else:
             return None
@@ -122,7 +122,7 @@ class ConnectFour(Game):
     def getName(self):
         return self.name
 
-    def getMoves(self):
+    def getMoves(self, player):
         move_list = []
         for j in range(self.getCol()):
             for i in range(self.getRow() - 1, -1, -1):
@@ -132,7 +132,7 @@ class ConnectFour(Game):
         return move_list
 
     def makeMove(self, row, col, player):
-        if [row, col] in self.getMoves():
+        if [row, col] in self.getMoves(1):
             self.board[row][col] = player
             if player == 1:
                 self.player1.append([row, col])
