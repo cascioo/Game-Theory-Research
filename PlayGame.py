@@ -22,12 +22,12 @@ center = Center(tic)
 randomCon = AI(con)
 copyCon_1 = copyBlock(con, 1)
 copyCon_2 = copyBlock(con, -1)
+MinMax2_1 = MiniMax(con, 2, 1)
+MinMax2_2 = MiniMax(con, 2, -1)
 MinMax3_1 = MiniMax(con, 3, 1)
 MinMax3_2 = MiniMax(con, 3, -1)
 MinMax4_1 = MiniMax(con, 4, 1)
 MinMax4_2 = MiniMax(con, 4, -1)
-MinMax5_1 = MiniMax(con, 5, 1)
-MinMax5_2 = MiniMax(con, 5, -1)
 
 # Choose game you want to play
 g = None
