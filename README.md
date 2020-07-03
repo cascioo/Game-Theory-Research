@@ -14,3 +14,9 @@ In PlayGame.py
   Counting starts from top left and starts at 0
   EX: to make a middle right move in tictactoe the inputs would be 1 for row and 2 for column
   
+Required Modules
+  tqdm
+  colored
+  
+ It is recommended to run the file in the terminal for best apperance
+  
