@@ -4,8 +4,9 @@ from Game import *
 
 
 class AI(object):
-    def __init__(self, game):
+    def __init__(self, game, player):
         self.game = game
+        self.player = player
 
     def __repr__(self):
         return "Random"
@@ -14,7 +15,7 @@ class AI(object):
         return 'Random'
 
     def chooseMove(self):
-        return choice(self.game.getMoves())
+        return choice(self.game.getMoves(self.player))
 
 
 class MiniMax(AI):
@@ -3101,11 +3102,12 @@ class copyBlock(AI):
                 self.game.resetMove(move[0], move[1])
             return None
 
+
 if __name__ == "__main__":
     try:
-        g = ConnectFour()
-        opp1 = copyBlock(g, 1)
-        opp2 = copyBlock(g, -1)
+        g = Checkers()
+        opp1 = AI(g, 1)
+        opp2 = AI(g, -1)
         turn = 1
         while g.checkWin() is None:
             print(g)

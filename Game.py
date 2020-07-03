@@ -1,6 +1,7 @@
 import numpy as np
 from colored import fg, bg, attr
 
+
 class Game(object):
     def __init__(self, col, row, playerNum):
         self.row = row
@@ -289,32 +290,36 @@ class Stratego(Game):
         self.name = 'Stratego'
         self.version = pieces
         if self.version == 40:
-            self.pieces = {88: 6,
-                           10: 1,
-                           9: 1,
-                           8: 2,
-                           7: 3,
-                           6: 4,
-                           5: 4,
-                           4: 4,
-                           3: 5,
-                           2: 8,
-                           1: 1,
-                           99: 1}
+            self.pieces = {
+                88: 6,
+                10: 1,
+                9: 1,
+                8: 2,
+                7: 3,
+                6: 4,
+                5: 4,
+                4: 4,
+                3: 5,
+                2: 8,
+                1: 1,
+                99: 1
+                }
 
         if self.version == 20:
-            self.pieces = {88: 4,
-                           10: 1,
-                           9: 1,
-                           8: 1,
-                           7: 1,
-                           6: 1,
-                           5: 1,
-                           4: 1,
-                           3: 3,
-                           2: 4,
-                           1: 1,
-                           99: 1}
+            self.pieces = {
+                88: 4,
+                10: 1,
+                9: 1,
+                8: 1,
+                7: 1,
+                6: 1,
+                5: 1,
+                4: 1,
+                3: 3,
+                2: 4,
+                1: 1,
+                99: 1
+                }
 
         self.player1 = []
         self.player2 = []
@@ -339,32 +344,36 @@ class Stratego(Game):
                 self.board[i][j] = 0
 
         if self.version == 40:
-            self.pieces = {88: 6,
-                           10: 1,
-                           9: 1,
-                           8: 2,
-                           7: 3,
-                           6: 4,
-                           5: 4,
-                           4: 4,
-                           3: 5,
-                           2: 8,
-                           1: 1,
-                           99: 1}
+            self.pieces = {
+                88: 6,
+                10: 1,
+                9: 1,
+                8: 2,
+                7: 3,
+                6: 4,
+                5: 4,
+                4: 4,
+                3: 5,
+                2: 8,
+                1: 1,
+                99: 1
+                }
 
         if self.version == 20:
-            self.pieces = {88: 4,
-                           10: 1,
-                           9: 1,
-                           8: 1,
-                           7: 1,
-                           6: 1,
-                           5: 1,
-                           4: 1,
-                           3: 3,
-                           2: 4,
-                           1: 1,
-                           99: 1}
+            self.pieces = {
+                88: 4,
+                10: 1,
+                9: 1,
+                8: 1,
+                7: 1,
+                6: 1,
+                5: 1,
+                4: 1,
+                3: 3,
+                2: 4,
+                1: 1,
+                99: 1
+                }
 
         self.player1 = []
         self.player2 = []
@@ -780,9 +789,155 @@ class Stratego(Game):
         return None
 
 
+class Checkers(Game):
+    def __init__(self):
+        super(Checkers, self).__init__(8, 8, 2)
+        self.name = "Checkers"
+        self.player1 = []
+        self.player2 = []
+
+        for i in range(8):
+            for j in range(8):
+                if i % 2 == 0:
+                    if j % 2 == 1:
+                        if i < 3:
+                            self.player2.append([[i, j], 1])
+                            self.board[i][j] = -1
+                        if i > 4:
+                            self.player1.append([[i, j], 1])
+                            self.board[i][j] = 1
+                    else:
+                        self.board[i][j] = -2
+                else:
+                    if j % 2 == 0:
+                        if i < 3:
+                            self.player2.append([[i, j], 1])
+                            self.board[i][j] = -1
+                        if i >= 5:
+                            self.player1.append([[i, j], 1])
+                            self.board[i][j] = 1
+                    else:
+                        self.board[i][j] = -2
+
+    def __repr__(self):
+        print_str = ""
+
+        for i in range(8):
+            for j in range(8):
+                if self.board[i][j] == 1:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(1), 'O', attr(0))
+                elif self.board[i][j] == -1:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(4), 'O', attr(0))
+                elif self.board[i][j] == -2:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(0), '-', attr(0))
+                else:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(7), ' ', attr(0))
+            print_str = print_str + '\n'
+
+        return print_str
+
+    def checkWin(self):
+        if len(self.player2) == 0:
+            return 1
+        elif len(self.player1) == 0:
+            return -1
+
+    def getMoves(self, player):  # For every piece, if can take, add moves then return, else add open spots
+        moves = []
+        if player == 1:
+            for piece in self.player1:
+                if piece[1] == 1:
+                    location = piece[0]
+                    if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                        if self.board[location[0] - 1][location[1] + 1] == -1:
+                            if self.board[location[0] - 2][location[1] + 2] == 0:
+                                moves.append([location,[location[0] - 2, location[1] + 2]])
+                    elif location[1] == 6 or location[1] == 7:
+                        if self.board[location[0] - 1][location[1] - 1] == -1:
+                            if self.board[location[0] - 2][location[1] - 2] == 0:
+                                moves.append([location, [location[0] - 2, location[1] - 2]])
+                    else:
+                        if self.board[location[0] - 1][location[1] - 1] == -1:
+                            if self.board[location[0] - 2][location[1] - 2] == 0:
+                                moves.append([location, [location[0] - 2, location[1] - 2]])
+                        if self.board[location[0] - 1][location[1] + 1] == -1:
+                            if self.board[location[0] - 2][location[1] + 2] == 0:
+                                moves.append([location, [location[0] - 2, location[1] + 2]])
+
+        else:
+            for piece in self.player2:
+                if piece[1] == 1:
+                    location = piece[0]
+                    if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                        if self.board[location[0] + 1][location[1] + 1] == 1:
+                            if self.board[location[0] + 2][location[1] + 2] == 0:
+                                moves.append([location, [location[0] + 2, location[1] + 2]])
+                    elif location[1] == 6 or location[1] == 7:
+                        if self.board[location[0] + 1][location[1] - 1] == 1:
+                            if self.board[location[0] + 2][location[1] - 2] == 0:
+                                moves.append([location, [location[0] + 2, location[1] - 2]])
+                    else:
+                        if self.board[location[0] + 1][location[1] - 1] == 1:
+                            if self.board[location[0] + 2][location[1] - 2] == 0:
+                                moves.append([location, [location[0] + 2, location[1] - 2]])
+                        if self.board[location[0] + 1][location[1] + 1] == 1:
+                            if self.board[location[0] + 2][location[1] + 2] == 0:
+                                moves.append([location, [location[0] + 2, location[1] + 2]])
+
+        if len(moves) != 0:
+            return moves
+
+        if player == 1:
+            for piece in self.player1:
+                if piece[1] == 1:
+                    location = piece[0]
+                    if location[1] == 0:
+                        if self.board[location[0] - 1][location[1] + 1] == 0:
+                            moves.append([location, [location[0] - 1, location[1] + 1]])
+                    elif location[1] == 7:
+                        if self.board[location[0] - 1][location[1] - 1] == 0:
+                            moves.append([location, [location[0] - 1, location[1] - 1]])
+                    else:
+                        if self.board[location[0] - 1][location[1] - 1] == 0:
+                            moves.append([location, [location[0] - 1, location[1] - 1]])
+                        if self.board[location[0] - 1][location[1] + 1] == 0:
+                            moves.append([location, [location[0] - 1, location[1] + 1]])
+
+        else:
+            for piece in self.player2:
+                if piece[1] == 1:
+                    location = piece[0]
+                    if location[1] == 0:
+                        if self.board[location[0] + 1][location[1] + 1] == 0:
+                            moves.append([location, [location[0] + 1, location[1] + 1]])
+                    elif location[1] == 7:
+                        if self.board[location[0] + 1][location[1] - 1] == 0:
+                            moves.append([location, [location[0] + 1, location[1] - 1]])
+                    else:
+                        if self.board[location[0] + 1][location[1] - 1] == 0:
+                            moves.append([location, [location[0] + 1, location[1] - 1]])
+                        if self.board[location[0] + 1][location[1] + 1] == 0:
+                            moves.append([location, [location[0] + 1, location[1] + 1]])
+
+        return moves
+
+    def makeMove(self, moveFrom, moveTo, player):
+        print(self.getMoves(player))
+        print(moveFrom, moveTo)
+        if abs(moveTo[1] - moveFrom[1]) == 2:
+            self.board[moveTo[0]][moveTo[1]] = player
+            self.board[moveFrom[0]][moveFrom[1]] = 0
+            self.board[moveFrom[0] + (moveTo[0] - moveFrom[0])//2][moveFrom[1] + (moveTo[1] - moveFrom[1])//2]
+        else:
+            self.board[moveTo[0]][moveTo[1]] = player
+            self.board[moveFrom[0]][moveFrom[1]] = 0
+
 
 if __name__ == "__main__":
     tic = TicTacToe()
     con = ConnectFour()
     strat = Stratego(40)
-    print(strat)
+    check = Checkers()
+    print(check)
+    for i in range(len(check.player1)):
+        print(check.getMoves(1)[i])

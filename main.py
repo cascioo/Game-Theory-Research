@@ -1,8 +1,8 @@
 import csv
-import sys
+import datetime
 from AI import *
 from Game import *
-
+from tqdm import tqdm
 tic = TicTacToe()
 
 randomTic = AI(tic)
@@ -75,15 +75,13 @@ try:
 
     for i in range(len(con_opponents_1)):
         for j in range(len(con_opponents_2)):
-            while games_played < 1000:
+            for game_play in tqdm(range(1000)):
                 playGame(con, con_opponents_1[i], con_opponents_2[j], wins, player)
                 con.resetBoard()
                 player = 1
-                games_played += 1
             print(con_opponents_1[i], con_opponents_2[j])
             print(wins)
             data[i + 1].append(str(wins[0]) + '-' + str(wins[1]) + '-' + str(wins[2]))
-            games_played = 0
             player = 1
             wins = [0, 0, 0]
 
