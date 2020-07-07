@@ -1,5 +1,6 @@
 import numpy as np
 from colored import fg, bg, attr
+from AI import *
 
 
 class Game(object):
@@ -807,7 +808,7 @@ class Checkers(Game):
                             self.player1.append([[i, j], 1])
                             self.board[i][j] = 1
                     else:
-                        self.board[i][j] = -2
+                        self.board[i][j] = -3
                 else:
                     if j % 2 == 0:
                         if i < 3:
@@ -817,7 +818,7 @@ class Checkers(Game):
                             self.player1.append([[i, j], 1])
                             self.board[i][j] = 1
                     else:
-                        self.board[i][j] = -2
+                        self.board[i][j] = -3
 
     def __repr__(self):
         print_str = ""
@@ -828,7 +829,11 @@ class Checkers(Game):
                     print_str = print_str + '|{}{:^3}{}|'.format(bg(1), 'O', attr(0))
                 elif self.board[i][j] == -1:
                     print_str = print_str + '|{}{:^3}{}|'.format(bg(4), 'O', attr(0))
+                elif self.board[i][j] == 2:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(1), 'K', attr(0))
                 elif self.board[i][j] == -2:
+                    print_str = print_str + '|{}{:^3}{}|'.format(bg(4), 'K', attr(0))
+                elif self.board[i][j] == -3:
                     print_str = print_str + '|{}{:^3}{}|'.format(bg(0), '-', attr(0))
                 else:
                     print_str = print_str + '|{}{:^3}{}|'.format(bg(7), ' ', attr(0))
@@ -841,6 +846,10 @@ class Checkers(Game):
             return 1
         elif len(self.player1) == 0:
             return -1
+        elif len(self.getMoves(1)) == 0:
+            return -1
+        elif len(self.getMoves(-1)) == 0:
+            return 1
 
     def getMoves(self, player):  # For every piece, if can take, add moves then return, else add open spots
         moves = []
@@ -848,42 +857,166 @@ class Checkers(Game):
             for piece in self.player1:
                 if piece[1] == 1:
                     location = piece[0]
-                    if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
-                        if self.board[location[0] - 1][location[1] + 1] == -1:
-                            if self.board[location[0] - 2][location[1] + 2] == 0:
-                                moves.append([location,[location[0] - 2, location[1] + 2]])
-                    elif location[1] == 6 or location[1] == 7:
-                        if self.board[location[0] - 1][location[1] - 1] == -1:
-                            if self.board[location[0] - 2][location[1] - 2] == 0:
-                                moves.append([location, [location[0] - 2, location[1] - 2]])
-                    else:
-                        if self.board[location[0] - 1][location[1] - 1] == -1:
-                            if self.board[location[0] - 2][location[1] - 2] == 0:
-                                moves.append([location, [location[0] - 2, location[1] - 2]])
-                        if self.board[location[0] - 1][location[1] + 1] == -1:
-                            if self.board[location[0] - 2][location[1] + 2] == 0:
-                                moves.append([location, [location[0] - 2, location[1] + 2]])
-
+                    if location[0] > 1:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location,[location[0] - 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                elif piece[1] == 2:
+                    location = piece[0]
+                    if 1 < location[0] < 6:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                            if self.board[location[0] + 1][location[1] + 1] < 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] - 1] < 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] - 1] < 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                            if self.board[location[0] + 1][location[1] + 1] < 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                    elif location[0] == 0:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] + 1][location[1] + 1] < 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] < 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] < 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] + 1] < 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                    elif location[0] == 7:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] < 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] - 1][location[1] + 1] < 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
         else:
             for piece in self.player2:
                 if piece[1] == 1:
                     location = piece[0]
-                    if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
-                        if self.board[location[0] + 1][location[1] + 1] == 1:
-                            if self.board[location[0] + 2][location[1] + 2] == 0:
-                                moves.append([location, [location[0] + 2, location[1] + 2]])
-                    elif location[1] == 6 or location[1] == 7:
-                        if self.board[location[0] + 1][location[1] - 1] == 1:
-                            if self.board[location[0] + 2][location[1] - 2] == 0:
-                                moves.append([location, [location[0] + 2, location[1] - 2]])
-                    else:
-                        if self.board[location[0] + 1][location[1] - 1] == 1:
-                            if self.board[location[0] + 2][location[1] - 2] == 0:
-                                moves.append([location, [location[0] + 2, location[1] - 2]])
-                        if self.board[location[0] + 1][location[1] + 1] == 1:
-                            if self.board[location[0] + 2][location[1] + 2] == 0:
-                                moves.append([location, [location[0] + 2, location[1] + 2]])
-
+                    if location[0] < 6:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                elif piece[1] == 2:
+                    location = piece[0]
+                    if 1 < location[0] < 6:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] - 1][location[1] + 1] > 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] > 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] > 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                            if self.board[location[0] - 1][location[1] + 1] > 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                    elif location[0] == 0:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] > 0:
+                                if self.board[location[0] + 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] - 2]])
+                            if self.board[location[0] + 1][location[1] + 1] > 0:
+                                if self.board[location[0] + 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] + 2, location[1] + 2]])
+                    elif location[0] == 7:
+                        if location[1] == 0 or location[1] == 1:  # Start checking for taking pieces
+                            if self.board[location[0] - 1][location[1] + 1] > 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
+                        elif location[1] == 6 or location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] > 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] > 0:
+                                if self.board[location[0] - 2][location[1] - 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] - 2]])
+                            if self.board[location[0] - 1][location[1] + 1] > 0:
+                                if self.board[location[0] - 2][location[1] + 2] == 0:
+                                    moves.append([location, [location[0] - 2, location[1] + 2]])
         if len(moves) != 0:
             return moves
 
@@ -891,46 +1024,174 @@ class Checkers(Game):
             for piece in self.player1:
                 if piece[1] == 1:
                     location = piece[0]
-                    if location[1] == 0:
-                        if self.board[location[0] - 1][location[1] + 1] == 0:
-                            moves.append([location, [location[0] - 1, location[1] + 1]])
-                    elif location[1] == 7:
-                        if self.board[location[0] - 1][location[1] - 1] == 0:
-                            moves.append([location, [location[0] - 1, location[1] - 1]])
-                    else:
-                        if self.board[location[0] - 1][location[1] - 1] == 0:
-                            moves.append([location, [location[0] - 1, location[1] - 1]])
-                        if self.board[location[0] - 1][location[1] + 1] == 0:
-                            moves.append([location, [location[0] - 1, location[1] + 1]])
-
+                    if location[0] != 0:
+                        if location[1] == 0:
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                elif piece[1] == 2:
+                    location = piece[0]
+                    if 0 < location[0] < 7:
+                        if location[1] == 0:
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                    elif location[0] == 0:
+                        if location[1] == 0:
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                    elif location[0] == 7:
+                        if location[1] == 0:
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
         else:
             for piece in self.player2:
                 if piece[1] == 1:
                     location = piece[0]
-                    if location[1] == 0:
-                        if self.board[location[0] + 1][location[1] + 1] == 0:
-                            moves.append([location, [location[0] + 1, location[1] + 1]])
-                    elif location[1] == 7:
-                        if self.board[location[0] + 1][location[1] - 1] == 0:
-                            moves.append([location, [location[0] + 1, location[1] - 1]])
-                    else:
-                        if self.board[location[0] + 1][location[1] - 1] == 0:
-                            moves.append([location, [location[0] + 1, location[1] - 1]])
-                        if self.board[location[0] + 1][location[1] + 1] == 0:
-                            moves.append([location, [location[0] + 1, location[1] + 1]])
-
+                    if location[0] != 7:
+                        if location[1] == 0:
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                elif piece[1] == 2:
+                    location = piece[0]
+                    if 0 < location[0] < 7:
+                        if location[1] == 0:
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                    elif location[0] == 0:
+                        if location[1] == 0:
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] + 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] - 1]])
+                            if self.board[location[0] + 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] + 1, location[1] + 1]])
+                    elif location[0] == 7:
+                        if location[1] == 0:
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
+                        elif location[1] == 7:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                        else:
+                            if self.board[location[0] - 1][location[1] - 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] - 1]])
+                            if self.board[location[0] - 1][location[1] + 1] == 0:
+                                moves.append([location, [location[0] - 1, location[1] + 1]])
         return moves
 
     def makeMove(self, moveFrom, moveTo, player):
-        print(self.getMoves(player))
-        print(moveFrom, moveTo)
-        if abs(moveTo[1] - moveFrom[1]) == 2:
-            self.board[moveTo[0]][moveTo[1]] = player
-            self.board[moveFrom[0]][moveFrom[1]] = 0
-            self.board[moveFrom[0] + (moveTo[0] - moveFrom[0])//2][moveFrom[1] + (moveTo[1] - moveFrom[1])//2]
+        if player == 1:
+            for piece in self.player1:
+                if piece[0] == moveFrom:
+                    if moveTo[0] == 0:
+                        piece[1] = 2
         else:
-            self.board[moveTo[0]][moveTo[1]] = player
+            for piece in self.player2:
+                if piece[0] == moveFrom:
+                    if moveTo[0] == 7:
+                        piece[1] = 2
+        if player == 1:
+            for piece in self.player1:
+                if piece[0] == moveFrom:
+                    break
+        else:
+            for piece in self.player2:
+                if piece[0] == moveFrom:
+                    break
+        if abs(moveTo[1] - moveFrom[1]) == 2:
+            self.board[moveTo[0]][moveTo[1]] = piece[1] * player
             self.board[moveFrom[0]][moveFrom[1]] = 0
+            self.board[moveFrom[0] + (moveTo[0] - moveFrom[0])//2][moveFrom[1] + (moveTo[1] - moveFrom[1])//2] = 0
+            if player == 1:
+                for piece in self.player2:
+                    if piece[0] == [moveFrom[0] + (moveTo[0] - moveFrom[0])//2, moveFrom[1] + (moveTo[1] - moveFrom[1])//2]:
+                        self.player2.remove(piece)
+            else:
+                for piece in self.player1:
+                    if piece[0] == [moveFrom[0] + (moveTo[0] - moveFrom[0])//2, moveFrom[1] + (moveTo[1] - moveFrom[1])//2]:
+                        self.player1.remove(piece)
+        else:
+            self.board[moveTo[0]][moveTo[1]] = piece[1] * player
+            self.board[moveFrom[0]][moveFrom[1]] = 0
+
+        if player == 1:
+            for piece in self.player1:
+                if piece[0] == moveFrom:
+                    piece[0] = moveTo
+        else:
+            for piece in self.player2:
+                if piece[0] == moveFrom:
+                    piece[0] = moveTo
+
+    def resetBoard(self):
+        self.__init__()
 
 
 if __name__ == "__main__":
@@ -938,6 +1199,23 @@ if __name__ == "__main__":
     con = ConnectFour()
     strat = Stratego(40)
     check = Checkers()
+    print(check.board)
     print(check)
-    for i in range(len(check.player1)):
-        print(check.getMoves(1)[i])
+    opp1 = AI(check, 1)
+    opp2 = AI(check, 2)
+    turn = 0
+    try:
+        while check.checkWin() is None:
+            if turn % 2 == 0:
+                move = opp1.chooseMove()
+                check.makeMove(move[0], move[1], 1)
+                print(check)
+                turn += 1
+            else:
+                move = opp2.chooseMove()
+                check.makeMove(move[0], move[1], -1)
+                print(check)
+                turn += 1
+        print(check.checkWin())
+    except KeyboardInterrupt:
+        pass
