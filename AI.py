@@ -1,6 +1,7 @@
-from math import inf
-from random import shuffle, choice
+import os
+from random import choice
 from Game import *
+from math import inf
 
 
 class AI(object):
@@ -69,7 +70,7 @@ class MiniMax(AI):
 
         if maxPlayer:
             value = -inf
-            for mv in self.game.getMoves():
+            for mv in self.game.getMoves(self.player):
                 self.game.makeMove(mv[0], mv[1], 1)
                 val = self.minimax_helper_v2(False, depth + 1, alpha, beta)
                 self.game.resetMove(mv[0], mv[1])
@@ -80,7 +81,7 @@ class MiniMax(AI):
             return value
         else:
             value = inf
-            for mv in self.game.getMoves():
+            for mv in self.game.getMoves(self.player):
                 self.game.makeMove(mv[0], mv[1], -1)
                 val = self.minimax_helper_v2(True, depth + 1, alpha, beta)
                 self.game.resetMove(mv[0], mv[1])
@@ -2569,7 +2570,7 @@ class MiniMax(AI):
         else:
             best_score = inf
 
-        for option in self.game.getMoves():
+        for option in self.game.getMoves(self.player):
             if self.player == 1:
                 self.game.makeMove(option[0], option[1], 1)
                 temp = self.minimax_helper_v2(False, 0, -inf, inf)
@@ -3103,32 +3104,128 @@ class copyBlock(AI):
             return None
 
 
+class Q_Learning(AI):
+    def __init__(self, game, player, start_table=None, learning_rate=.1, discount_factor=.95, epsilon=.6):
+        super().__init__(game, player)
+        self.name = "Q-Learning"
+        self.LR = learning_rate
+        self.DF = discount_factor
+        self.EPSILON = epsilon
+        self.MOVE_PENALTY = 1
+        self.REWARD = 100
+        self.q_table = self.load_table(start_table)
+
+    def getName(self):
+        return self.name
+
+    def __repr__(self):
+        return self.name
+
+    def get_state(self):
+        state = ""
+        for j in range(self.game.getRow()):
+            for i in range(self.game.getCol()):
+                state = state + str(int(self.game.board[i][j]))
+        return state
+
+    def get_actions(self):
+        actions = ""
+        moves = self.game.getMoves(self.player)
+        for i in moves:
+            actions = actions + str(i[0] * self.game.getCol() + i[1])
+        return actions
+
+    def chooseMove(self):
+        old_state = self.get_state()
+        old_actions = self.get_actions()
+        try:
+            old_values = self.q_table[old_state, old_actions]
+        except KeyError:
+            self.q_table[old_state, old_actions] = np.zeros(len(old_actions))
+            old_values = np.zeros(len(old_actions))
+        if self.player == 1:
+            index = np.argmax(old_values)
+        else:
+            index = np.argmin(old_values)
+
+        old_q_value = old_values[index]
+        move = [int(old_actions[index]) // self.game.getCol(), int(old_actions[index]) % self.game.getCol()]
+
+        self.game.makeMove(move[0], move[1], self.player)
+        new_state = self.get_state()
+        new_actions = self.get_actions()
+
+        try:
+            new_values = self.q_table[new_state, new_actions]
+        except KeyError:
+            self.q_table[new_state, new_actions] = np.zeros(len(new_actions))
+            new_values = np.zeros(len(new_actions))
+
+        if len(new_values) > 0:
+
+            if self.player == 1:
+                new_index = np.argmin(new_values)
+            else:
+                new_index = np.argmax(new_values)
+
+            future_q_value = new_values[new_index]
+            if self.game.checkWin() is not None:
+                reward = self.game.checkWin() * self.REWARD
+            else:
+                reward = self.MOVE_PENALTY * -1 * self.player
+
+            new_q_value = old_q_value + self.LR * (reward + self.DF * future_q_value - old_q_value)
+            self.q_table[old_state, old_actions][index] = new_q_value
+
+        self.game.resetMove(move[0], move[1])
+        return move
+
+    def save_table(self, filename):
+        with open(os.path.join(os.getcwd(), "Q Tables",filename), "w") as f:
+            for i in self.q_table:
+                values = ""
+                for j in self.q_table[i]:
+                    values = values + str(j) + " "
+                f.write(i[0] + " " + i[1] + " " + values + '\n')
+
+    def load_table(self, filename):
+        temp = {}
+        try:
+
+            with open(os.path.join(os.getcwd(), "Q Tables", filename), "r", newline="\n") as f:
+                for i in f:
+                    list = i.split()
+                    count = len(list)
+                    state = list[0]
+                    actions = ""
+                    values = []
+                    if count > 1:
+                        actions = list[1]
+                        for j in range(2, count):
+                            values.append(float(list[j]))
+                    temp[state, actions] = values
+                return temp
+        except FileNotFoundError:
+            return {}
+
 if __name__ == "__main__":
     try:
-        g = Checkers()
-        opp1 = AI(g, 1)
+        g = TicTacToe()
+        opp1 = Q_Learning(g, 1, start_table="Q_Table.txt")
         opp2 = AI(g, -1)
-        turn = 1
+        turn = 0
         while g.checkWin() is None:
             print(g)
-            if turn % 2 == 1:
+            if turn % 2 == 0:
                 move = opp1.chooseMove()
-                opp1.game.makeMove(move[0], move[1], 1)
+                g.makeMove(move[0], move[1], 1)
                 turn += 1
             else:
-
                 move = opp2.chooseMove()
-                opp2.game.makeMove(move[0], move[1], -1)
+                g.makeMove(move[0], move[1], -1)
                 turn += 1
-            '''
-                move = int(input("Pick a column: "))
-                new_move = []
-                for moves in g.getMoves():
-                    if move == moves[1]:
-                        new_move = moves
-                opp2.game.makeMove(new_move[0], new_move[1], -1)
-                turn += 1
-               '''
         print(g)
+        print(g.checkWin())
+        opp1.save_table("Q_Table.txt")
     except KeyboardInterrupt:
         pass
