@@ -6,9 +6,9 @@ game = 0
 wins = [0,0,0]
 try:
     g = TicTacToe()
-    table = Q_Table(start_table="Q_Table_1610000")
-    opp1 = Q_Learning(g, 1, table, learning_rate=.2, discount_factor=.99, decay=0.000001, lr_decay=.000001, epsilon=.2)
-    opp2 = Q_Learning(g, -1, table, learning_rate=.2, discount_factor=.99, decay=0.000001, lr_decay=.000001, epsilon=.2)
+    table = Q_Table()
+    opp1 = Q_Learning(g, 1, table, learning_rate=.1, discount_factor=.99, decay=0, lr_decay=0, epsilon=.1)
+    opp2 = Q_Learning(g, -1, table, learning_rate=.1, discount_factor=.99, decay=0, lr_decay=0, epsilon=.1)
     while wins[2] <= .8*save_every:
         turn = 0
         while g.checkWin() is None:
