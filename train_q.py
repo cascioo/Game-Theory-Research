@@ -1,15 +1,15 @@
 from AI import *
 from Game import *
 
-iteration = 100000
-save_every = 1000
+save_every = 10000
 game = 0
 wins = [0,0,0]
 try:
     g = TicTacToe()
-    opp1 = MiniMax(g, 4, 1)
-    opp2 = Q_Learning(g, -1, start_table="Q_Table_10000_-1")
-    while game <= iteration:
+    table = Q_Table(start_table="Q_Table_1610000")
+    opp1 = Q_Learning(g, 1, table, learning_rate=.2, discount_factor=.99, decay=0.000001, lr_decay=.000001, epsilon=.2)
+    opp2 = Q_Learning(g, -1, table, learning_rate=.2, discount_factor=.99, decay=0.000001, lr_decay=.000001, epsilon=.2)
+    while wins[2] <= .8*save_every:
         turn = 0
         while g.checkWin() is None:
             if turn % 2 == 0:
@@ -28,9 +28,15 @@ try:
             wins[2] += 1
         g.resetBoard()
         game += 1
+        opp1.decay_epsilon()
+        opp2.decay_epsilon()
+        opp1.decay_lr()
+        opp2.decay_lr()
         if game % save_every == 0:
-            opp2.save_table(f"Q_Table_{game}_{opp2.player}")
+            table.save_table(f"Q_Table_{game}")
             print(wins)
+            print(opp1.EPSILON)
+            wins = [0,0,0]
 except KeyboardInterrupt:
-    opp2.save_table(f"Q_Table_{game}_{opp2.player}")
+    table.save_table(f"Q_Table_{game}")
     print(wins)

@@ -20,6 +20,9 @@ centercorner1 = CenterCorner(tic, 1)
 centercorner2 = CenterCorner(tic, -1)
 center1 = Center(tic, 1)
 center2 = Center(tic, -1)
+table = Q_Table("Q_Table_420000")
+q1 = Q_Learning(tic, 1, table, learning_rate=0, epsilon=0)
+q2 = Q_Learning(tic, -1, table, learning_rate=0, epsilon=0)
 
 # Various opponents for Connect Four
 randomCon_1 = AI(con, 1)
@@ -34,9 +37,9 @@ MinMax4_1 = MiniMax(con, 4, 1)
 MinMax4_2 = MiniMax(con, 4, -1)
 
 # Choose game you want to play
-g = None
+g = tic
 # choose opponent from above list
-opp1 = None
+opp1 = q1
 # Choose a second opponent if you want to watch it play
 opp2 = None
 # Change turn to set who goes first, 0 is computer, 1 is you
@@ -45,7 +48,7 @@ try:
 
     while g.checkWin() is None:
         print(g)
-        if turn % 2 == 1:
+        if turn % 2 == 0:
             move = opp1.chooseMove()
             opp1.game.makeMove(move[0], move[1], 1)
             turn += 1

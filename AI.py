@@ -1,7 +1,7 @@
 import os
 from random import choice
 from Game import *
-from math import inf
+from math import inf, pow
 
 
 class AI(object):
@@ -3105,15 +3105,20 @@ class copyBlock(AI):
 
 
 class Q_Learning(AI):
-    def __init__(self, game, player, start_table=None, learning_rate=.1, discount_factor=.95, epsilon=.6):
+    def __init__(self, game, player, table, learning_rate=.01, discount_factor=.99, epsilon=1, lr_decay=.00001, decay=.00001):
         super().__init__(game, player)
         self.name = "Q-Learning"
+        self.START_LR = learning_rate
         self.LR = learning_rate
+        self.LR_DECAY = lr_decay
         self.DF = discount_factor
+        self.START_EPSILON = epsilon
         self.EPSILON = epsilon
-        self.MOVE_PENALTY = 1
-        self.REWARD = 100
-        self.q_table = self.load_table(start_table)
+        self.EPSILON_DECAY = decay
+        self.MOVE_PENALTY = 0
+        self.REWARD = 1000
+        self.q_table = table.q_table
+
 
     def getName(self):
         return self.name
@@ -3135,6 +3140,9 @@ class Q_Learning(AI):
             actions = actions + str(i[0] * self.game.getCol() + i[1])
         return actions
 
+    def set_EPSILON(self, new_epsilon):
+        self.EPSILON = new_epsilon
+
     def chooseMove(self):
         old_state = self.get_state()
         old_actions = self.get_actions()
@@ -3143,11 +3151,15 @@ class Q_Learning(AI):
         except KeyError:
             self.q_table[old_state, old_actions] = np.zeros(len(old_actions))
             old_values = np.zeros(len(old_actions))
-        if self.player == 1:
-            index = np.argmax(old_values)
-        else:
-            index = np.argmin(old_values)
 
+        random_threshold = np.random.uniform(0,1)
+        if random_threshold > self.EPSILON:
+            if self.player == 1:
+                index = np.argmax(old_values)
+            else:
+                index = np.argmin(old_values)
+        else:
+            index = np.random.randint(0,len(old_values))
         old_q_value = old_values[index]
         move = [int(old_actions[index]) // self.game.getCol(), int(old_actions[index]) % self.game.getCol()]
 
@@ -3162,7 +3174,6 @@ class Q_Learning(AI):
             new_values = np.zeros(len(new_actions))
 
         if len(new_values) > 0:
-
             if self.player == 1:
                 new_index = np.argmin(new_values)
             else:
@@ -3170,15 +3181,30 @@ class Q_Learning(AI):
 
             future_q_value = new_values[new_index]
             if self.game.checkWin() is not None:
-                reward = self.game.checkWin() * self.REWARD
+                if self.game.checkWin() == self.player:
+                    reward = self.REWARD * self.player
+                elif self.game.checkWin() == -self.player:
+                    reward = -self.REWARD * self.player
+                else:
+                    reward = 0
             else:
-                reward = self.MOVE_PENALTY * -1 * self.player
+                reward = -self.MOVE_PENALTY * self.player
 
             new_q_value = old_q_value + self.LR * (reward + self.DF * future_q_value - old_q_value)
             self.q_table[old_state, old_actions][index] = new_q_value
 
         self.game.resetMove(move[0], move[1])
         return move
+
+    def decay_epsilon(self):
+        self.EPSILON = self.EPSILON * (1 - (self.EPSILON_DECAY))
+
+    def decay_lr(self):
+        self.LR = self.LR * (1 - (self.LR_DECAY))
+
+class Q_Table:
+    def __init__(self, start_table=None):
+        self.q_table = self.load_table(start_table)
 
     def save_table(self, filename):
         with open(os.path.join(os.getcwd(), "Q Tables",filename), "w") as f:
@@ -3191,8 +3217,9 @@ class Q_Learning(AI):
     def load_table(self, filename):
         temp = {}
         try:
-
+            print(os.path.join(os.getcwd(), "Q Tables", filename))
             with open(os.path.join(os.getcwd(), "Q Tables", filename), "r", newline="\n") as f:
+                print("Loading...")
                 for i in f:
                     list = i.split()
                     count = len(list)
@@ -3206,13 +3233,18 @@ class Q_Learning(AI):
                     temp[state, actions] = values
                 return temp
         except FileNotFoundError:
+            print("Load failed")
+            return {}
+        except TypeError:
+            print("Creating New Table")
             return {}
 
 if __name__ == "__main__":
     try:
         g = TicTacToe()
-        opp1 = Q_Learning(g, 1, start_table="Q_Table.txt")
-        opp2 = AI(g, -1)
+        table = Q_Table("Q_Table_830000")
+        opp1 = Q_Learning(g, 1, table, learning_rate=0, epsilon=0)
+        opp2 = Q_Learning(g, -1, table, learning_rate=0, epsilon=0)
         turn = 0
         while g.checkWin() is None:
             print(g)
@@ -3224,8 +3256,8 @@ if __name__ == "__main__":
                 move = opp2.chooseMove()
                 g.makeMove(move[0], move[1], -1)
                 turn += 1
+            input("")
         print(g)
         print(g.checkWin())
-        opp1.save_table("Q_Table.txt")
     except KeyboardInterrupt:
         pass
