@@ -1,5 +1,5 @@
 import os
-from random import choice
+from random import choice, shuffle
 from Game import *
 from math import inf, pow
 
@@ -2602,18 +2602,18 @@ class CenterCorner(AI):
         return "CenterCorner"
 
     def chooseMove(self):
-        if (1, 1) in self.game.getMoves():
+        if (1, 1) in self.game.getMoves(1):
             return 1, 1
-        elif (0, 0) in self.game.getMoves() or (2, 0) in self.game.getMoves() or (0, 2) in self.game.getMoves() or (
-                2, 2) in self.game.getMoves():
+        elif (0, 0) in self.game.getMoves(1) or (2, 0) in self.game.getMoves(1) or (0, 2) in self.game.getMoves(1) or (
+                2, 2) in self.game.getMoves(1):
             pick = choice([(0, 0), (2, 0), (0, 2), (2, 2)])
-            while pick not in self.game.getMoves():
+            while pick not in self.game.getMoves(1):
                 pick = choice([(0, 0), (2, 0), (0, 2), (2, 2)])
             return pick
-        elif (1, 0) in self.game.getMoves() or (0, 1) in self.game.getMoves() or (1, 2) in self.game.getMoves() or (
-                2, 1) in self.game.getMoves():
+        elif (1, 0) in self.game.getMoves(1) or (0, 1) in self.game.getMoves(1) or (1, 2) in self.game.getMoves(1) or (
+                2, 1) in self.game.getMoves(1):
             pick = choice([(1, 0), (0, 1), (1, 2), (2, 1)])
-            while pick not in self.game.getMoves():
+            while pick not in self.game.getMoves(1):
                 pick = choice([(1, 0), (0, 1), (1, 2), (2, 1)])
             return pick
 
@@ -2630,10 +2630,10 @@ class Center(AI):
         return self.name
 
     def chooseMove(self):
-        if (1, 1) in self.game.getMoves():
+        if (1, 1) in self.game.getMoves(1):
             return 1, 1
         else:
-            return choice(self.game.getMoves())
+            return choice(self.game.getMoves(1))
 
 
 class baseStratego(AI):
@@ -2806,7 +2806,7 @@ class defenseTic(AI):
                     self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
                 return [2, 2]
 
-        return choice(self.game.getMoves())
+        return choice(self.game.getMoves(1))
 
 
 class offenseTic(AI):
@@ -2890,7 +2890,7 @@ class offenseTic(AI):
                     self.game.board[2][0] == self.game.board[2][1] == 1 and self.game.board[2][2] == 0 or \
                     self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
                 return [2, 2]
-        return choice(self.game.getMoves())
+        return choice(self.game.getMoves(1))
 
 
 class offdefTic(AI):
@@ -3044,7 +3044,7 @@ class offdefTic(AI):
                     self.game.board[0][2] == self.game.board[1][2] == 1 and self.game.board[2][2] == 0:
                 return [2, 2]
 
-        return choice(self.game.getMoves())
+        return choice(self.game.getMoves(1))
 
 
 class copyBlock(AI):
@@ -3065,29 +3065,29 @@ class copyBlock(AI):
                 return self.nextMoveWin()
             else:
                 if len(self.game.player2) == 0:
-                    return choice(self.game.getMoves())
+                    return choice(self.game.getMoves(1))
                 else:
                     col = self.game.player2[-1][1]
-                    for move in self.game.getMoves():
+                    for move in self.game.getMoves(1):
                         if col == move[1]:
                             return move
-                    return choice(self.game.getMoves())
+                    return choice(self.game.getMoves(1))
         else:
             if self.nextMoveWin() is not None:
                 return self.nextMoveWin()
             else:
                 if len(self.game.player1) == 0:
-                    return choice(self.game.getMoves())
+                    return choice(self.game.getMoves(1))
                 else:
                     col = self.game.player1[-1][1]
-                    for move in self.game.getMoves():
+                    for move in self.game.getMoves(1):
                         if col == move[1]:
                             return move
-                    return choice(self.game.getMoves())
+                    return choice(self.game.getMoves(1))
 
     def nextMoveWin(self):
         if self.player == 1:
-            for move in self.game.getMoves():
+            for move in self.game.getMoves(1):
                 self.game.makeMove(move[0], move[1], -1)
                 if self.game.checkWin() == -1:
                     self.game.resetMove(move[0], move[1])
@@ -3095,7 +3095,7 @@ class copyBlock(AI):
                 self.game.resetMove(move[0], move[1])
             return None
         else:
-            for move in self.game.getMoves():
+            for move in self.game.getMoves(1):
                 self.game.makeMove(move[0], move[1], 1)
                 if self.game.checkWin() == 1:
                     self.game.resetMove(move[0], move[1])
@@ -3115,8 +3115,8 @@ class Q_Learning(AI):
         self.START_EPSILON = epsilon
         self.EPSILON = epsilon
         self.EPSILON_DECAY = decay
-        self.MOVE_PENALTY = 0
-        self.REWARD = 1000
+        self.MOVE_PENALTY = 1
+        self.REWARD = 100
         self.q_table = table.q_table
 
 
@@ -3130,15 +3130,26 @@ class Q_Learning(AI):
         state = ""
         for j in range(self.game.getRow()):
             for i in range(self.game.getCol()):
-                state = state + str(int(self.game.board[i][j]))
+                state = state + str(int(self.game.board[j][i]))
         return state
 
     def get_actions(self):
         actions = ""
         moves = self.game.getMoves(self.player)
-        for i in moves:
-            actions = actions + str(i[0] * self.game.getCol() + i[1])
+        for i in range(len(moves)):
+            actions = actions + self.encode_action(i)
         return actions
+
+    def encode_action(self, action):
+        charlist = "0123456789abcdefghijklmnopqrstuvwxyz"
+        return charlist[action]
+
+    def decode_action(self, char_action):
+        charlist = "0123456789abcdefghijklmnopqrstuvwxyz"
+        for i in range(len(charlist)):
+            if charlist[i] == char_action:
+                return i
+        return None
 
     def set_EPSILON(self, new_epsilon):
         self.EPSILON = new_epsilon
@@ -3161,7 +3172,8 @@ class Q_Learning(AI):
         else:
             index = np.random.randint(0,len(old_values))
         old_q_value = old_values[index]
-        move = [int(old_actions[index]) // self.game.getCol(), int(old_actions[index]) % self.game.getCol()]
+        decoded_index = self.decode_action(old_actions[index])
+        move = self.game.getMoves(self.player)[decoded_index]
 
         self.game.makeMove(move[0], move[1], self.player)
         new_state = self.get_state()
@@ -3241,8 +3253,8 @@ class Q_Table:
 
 if __name__ == "__main__":
     try:
-        g = TicTacToe()
-        table = Q_Table("Q_Table_830000")
+        g = ConnectFour()
+        table = Q_Table()
         opp1 = Q_Learning(g, 1, table, learning_rate=0, epsilon=0)
         opp2 = Q_Learning(g, -1, table, learning_rate=0, epsilon=0)
         turn = 0

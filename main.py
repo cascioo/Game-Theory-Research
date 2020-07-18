@@ -22,8 +22,12 @@ centercorner1 = CenterCorner(tic, 1)
 centercorner2 = CenterCorner(tic, -1)
 center1 = Center(tic, 1)
 center2 = Center(tic, -1)
-tic_opponents_1 = [randomTic1, center1, centercorner1, defense1, offense1, dual1, minmax1]
-tic_opponents_2 = [randomTic2, center2, centercorner2, defense2, offense2, dual2, minmax2]
+table = Q_Table("Q_Table_100000")
+q1 = Q_Learning(tic, 1, table, learning_rate=0, epsilon=0)
+q2 = Q_Learning(tic, -1, table, learning_rate=0, epsilon=0)
+tic_opponents_1 = [randomTic1, center1, centercorner1, defense1, offense1, dual1, minmax1, q1]
+tic_opponents_2 = [randomTic2, center2, centercorner2, defense2, offense2, dual2, minmax2, q2]
+
 
 randomCon_1 = AI(con, 1)
 randomCon_2 = AI(con, -1)
@@ -72,34 +76,34 @@ def playGame(game, opponent1, opponent2, w, p):
 
 try:
     data = []
-    for i in range(len(check_opponents_1) + 1):
+    for i in range(len(tic_opponents_1) + 1):
         data.append([])
 
     data[0].append('')
-    for i in check_opponents_2:
+    for i in tic_opponents_1:
         data[0].append(i.getName())
 
-    for i in range(len(check_opponents_1)):
-        data[i + 1].append(check_opponents_2[i].getName())
+    for i in range(len(tic_opponents_1)):
+        data[i + 1].append(tic_opponents_2[i].getName())
 
-    for i in range(len(check_opponents_1)):
-        for j in range(len(check_opponents_2)):
+    for i in range(len(tic_opponents_1)):
+        for j in range(len(tic_opponents_2)):
             for game_play in tqdm(range(1000)):
-                playGame(check, check_opponents_1[i], check_opponents_2[j], wins, player)
-                check.resetBoard()
+                playGame(tic, tic_opponents_1[i], tic_opponents_2[j], wins, player)
+                tic.resetBoard()
                 player = 1
-            print(check_opponents_1[i], check_opponents_2[j])
+            print(tic_opponents_1[i], tic_opponents_2[j])
             print(wins)
             data[i + 1].append(str(wins[0]) + '-' + str(wins[1]) + '-' + str(wins[2]))
             player = 1
             wins = [0, 0, 0]
 
-    with open('check_data.csv', 'w', newline='') as csvfile:
+    with open('tic_data.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',', quotechar=' ', quoting=csv.QUOTE_MINIMAL, escapechar=' ',
                             skipinitialspace=True)
         writer.writerows(data)
 except KeyboardInterrupt:
-    with open('con_data.csv', 'w', newline='') as csvfile:
+    with open('tic_data.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter=',', quotechar=' ', quoting=csv.QUOTE_MINIMAL, escapechar=' ',
                             skipinitialspace=True)
         writer.writerows(data)

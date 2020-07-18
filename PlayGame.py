@@ -20,10 +20,9 @@ centercorner1 = CenterCorner(tic, 1)
 centercorner2 = CenterCorner(tic, -1)
 center1 = Center(tic, 1)
 center2 = Center(tic, -1)
-table1 = Q_Table("Q_Table_20000")
-table2 = Q_Table("Q_Table_Best")
+table1 = Q_Table("Q_Table_TicTacToe")
 q1 = Q_Learning(tic, 1, table1, learning_rate=0, epsilon=0)
-q2 = Q_Learning(tic, -1, table2, learning_rate=0, epsilon=0)
+q2 = Q_Learning(tic, -1, table1, learning_rate=0, epsilon=0)
 
 # Various opponents for Connect Four
 randomCon_1 = AI(con, 1)
@@ -36,13 +35,16 @@ MinMax3_1 = MiniMax(con, 3, 1)
 MinMax3_2 = MiniMax(con, 3, -1)
 MinMax4_1 = MiniMax(con, 4, 1)
 MinMax4_2 = MiniMax(con, 4, -1)
+table_c = Q_Table("Q_Table_570000")
+qc1 = Q_Learning(con, 1, table_c, learning_rate=0, epsilon=0)
+qc2 = Q_Learning(con, -1, table_c, learning_rate=0, epsilon=0)
 
 # Choose game you want to play
-g = tic
+g = con
 # choose opponent from above list
-opp1 = q1
+opp1 = qc1
 # Choose a second opponent if you want to watch it play
-opp2 = q2
+opp2 = qc2
 # Change turn to set who goes first, 0 is computer, 1 is you
 turn = 0
 try:

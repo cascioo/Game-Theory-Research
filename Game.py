@@ -850,6 +850,8 @@ class Checkers(Game):
             return -1
         elif len(self.getMoves(-1)) == 0:
             return 1
+        else:
+            return None
 
     def getMoves(self, player):  # For every piece, if can take, add moves then return, else add open spots
         moves = []
